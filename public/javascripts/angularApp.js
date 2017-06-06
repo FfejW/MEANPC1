@@ -106,6 +106,7 @@ function($stateProvider, $urlRouterProvider) {
     });
   };
 
+
   return o;
 }])
 .factory('auth', ['$http', '$window', '$rootScope', function($http, $window, $rootScope){
@@ -167,7 +168,18 @@ function($stateProvider, $urlRouterProvider) {
 				headers: { Authorization: 'Bearer ' + auth.getToken() }
 			});
 		}
-	}
+	},
+    isEditable: function (course) {
+        var token = auth.getToken();
+                
+        if (token) {
+            var payload = JSON.parse($window.atob(token.split('.')[1]));
+                    
+            return payload.username === course.author;
+        } else {
+            return false;
+        }
+    }
   };
 
   return auth;
@@ -204,8 +216,9 @@ function($stateProvider, $urlRouterProvider) {
 		return $http.put('/courses/' + course._id, course, {
 			headers: { Authorization: 'Bearer ' + auth.getToken() }
 		}).success(function (data) {
-			o.courses.splice(o.courses.lastIndexOf(course), 1);
-			o.courses.push(data);
+			//o.courses.splice(o.courses.lastIndexOf(course), 1);
+			//o.courses.push(data);
+                getAll();
 		});
 	};
 
@@ -304,7 +317,7 @@ function($scope, auth){
 	function ($scope, courses, auth) {
 		$scope.courses = courses.courses;
 		$scope.isLoggedIn = auth.isLoggedIn;
-		$scope.canEditCourses = auth.canEditCourses;
+        $scope.canEditCourses = auth.canEditCourses;
 
 		$scope.addCourse = function () {
 			if ($scope.courseTitle === '') { return; }
@@ -314,15 +327,6 @@ function($scope, auth){
 			});
 			$scope.courseTitle = '';
 			$scope.courseDescription = '';
-		};
-
-		$scope.addCourse = function () {
-			if ($scope.courseTitle === '') { return; }
-			courses.create({
-				description: $scope.courseDescription
-			});
-			$scope.courseTitleEdit = '';
-			$scope.courseDescriptionEdit = '';
 		};
 
 		$scope.removeCourse = function(course) {
@@ -343,9 +347,14 @@ function($scope, auth){
 			});
 			$scope.courseTitleEdit = '';
 			$scope.courseDescriptionEdit = '';
+            $scope.courses = courses.courses;
 		}
 
 		$scope.addCourseToUser = function (course) {
 			auth.addCourse(course);
-		}
+        }
+
+        $scope.isEditable = function (course){
+            return auth.isEditable(course);// === course.author;
+        }
 	}]);

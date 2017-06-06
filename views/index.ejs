@@ -151,8 +151,8 @@
 			<span ng-show="course.author">
 				provided by {{course.author}} |
 			</span>
-			<span title="Edit Course" class="glyphicon glyphicon-pencil" ng-show="canEditCourses()" ng-click="getCourseForEdit(course);"></span>
-			<span title="Delete Course" class="glyphicon glyphicon-remove" ng-show="canEditCourses()" ng-click="removeCourse(course)"></span>
+			<span title="Edit Course" class="glyphicon glyphicon-pencil" ng-show="isEditable(course)" ng-click="getCourseForEdit(course);"></span>
+			<span title="Delete Course" class="glyphicon glyphicon-remove" ng-show="isEditable(course)" ng-click="removeCourse(course)"></span>
 			<span title="I completed this!" ng-show="isLoggedIn()" class="glyphicon glyphicon-ok" ng-click="addCourseToUser(course)"></span>
 		</div>
 		<div>
