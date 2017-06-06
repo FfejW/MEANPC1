@@ -1,0 +1,2 @@
+C:\MEANProjects\MEANPC\obj\Debug\MEANPC.njsprojResolveAssemblyReference.cache
+C:\MEANProjects\MEANPC\bin\Microsoft.NodejsTools.WebRole.dll
