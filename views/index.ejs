@@ -194,8 +194,10 @@
 			<span ng-show="course.author">
 				posted by {{course.author}} |
 			</span>
-			<span class="glyphicon glyphicon-thumbs-up"
-	  ng-click="removeCourse(course)"></span>
+			<span class="glyphicon glyphicon-pencil"
+				  ng-click="removeCourse(course)"></span>
+			<span class="glyphicon glyphicon-remove"
+			      ng-click="removeCourse(course)"></span>
 		</div>
 
 		<div ng-show="canEditCourses()">
