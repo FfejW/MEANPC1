@@ -182,7 +182,7 @@
 		<div class="page-header">
 			<h1>Courses</h1>
 		</div>
-		<div ng-repeat="course in courses" id="temp">
+		<div ng-repeat="course in courses">
 			<span style="font-size:20px; margin-left:10px;">
 				<a href="#/courses/{{course._id}}">
 					{{course.title}}
@@ -194,16 +194,17 @@
 			<span ng-show="course.author">
 				posted by {{course.author}} |
 			</span>
-			<span class="glyphicon glyphicon-pencil"
-				  ng-click="removeCourse(course)"></span>
-			<span class="glyphicon glyphicon-remove"
-			      ng-click="removeCourse(course)"></span>
+			<span class="glyphicon glyphicon-pencil" ng-click="removeCourse(course)"></span>
+			<span class="glyphicon glyphicon-remove" ng-click="removeCourse(course)"></span>
+		</div>
+		<div>
+			<button type="button" class="btn btn-primary" ng-show="!showAdd" ng-click="showAdd = true;">New Course</button>
 		</div>
 
-		<div ng-show="canEditCourses()">
+		<div ng-show="canEditCourses() && showAdd">
 			<form ng-submit="addCourse()"
 				  style="margin-top:30px;" ng-show="isLoggedIn()">
-				<h3>Add a new course</h3>
+				<h3>Add a New Course</h3>
 				<div class="form-group">
 					<input type="text"
 						   class="form-control"
@@ -216,7 +217,8 @@
 						   placeholder="Description"
 						   ng-model="courseDescription"></input>
 				</div>
-				<button type="submit" class="btn btn-primary">Add course</button>
+				<button type="submit" class="btn btn-primary" ng-click="showAdd = false;">Add Course</button>
+				<button type="reset" class="btn btn-default" ng-click="showAdd = false;">Cancel</button>
 			</form>
 		</div>
 		<div ng-hide="isLoggedIn()">
