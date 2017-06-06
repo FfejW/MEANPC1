@@ -168,12 +168,6 @@ function($stateProvider, $urlRouterProvider) {
 		courses: []
 	};
 
-	//o.get = function (id) {
-	//	return $http.get('/courses/' + id).then(function (res) {
-	//		return res.data;
-	//	});
-	//};
-
 	o.getAll = function () {
 		return $http.get('/courses').success(function (data) {
 			angular.copy(data, o.courses);
@@ -191,11 +185,20 @@ function($stateProvider, $urlRouterProvider) {
 	o.delete = function(course) {
 		return $http.delete('/courses/' + course._id)
 			.success(function() {
-				o.courses.splice(o.courses.lastIndexOf(course));
+				o.courses.splice(o.courses.lastIndexOf(course), 1);
 			}, function(response) {
 				//o fuck
 			});
 	}
+
+	o.update = function (course) {
+		return $http.put('/courses/' + course._id, course, {
+			headers: { Authorization: 'Bearer ' + auth.getToken() }
+		}).success(function (data) {
+			o.courses.splice(o.courses.lastIndexOf(course), 1);
+			o.courses.push(data);
+		});
+	};
 
 	return o;
 }])
@@ -304,7 +307,32 @@ function($scope, auth){
 			$scope.courseDescription = '';
 		};
 
+		$scope.addCourse = function () {
+			if ($scope.courseTitle === '') { return; }
+			courses.create({
+				description: $scope.courseDescription
+			});
+			$scope.courseTitleEdit = '';
+			$scope.courseDescriptionEdit = '';
+		};
+
 		$scope.removeCourse = function(course) {
 			courses.delete(course);
+		}
+
+		$scope.getCourseForEdit = function (course) {
+			$scope.courseIdEdit = course._id;
+			$scope.courseTitleEdit = course.title;
+			$scope.courseDescriptionEdit = course.description;
+			$scope.showEdit = true;
+		}
+
+		$scope.editCourse = function() {
+			courses.update({
+				_id: $scope.courseIdEdit,
+				description: $scope.courseDescriptionEdit
+			});
+			$scope.courseTitleEdit = '';
+			$scope.courseDescriptionEdit = '';
 		}
 	}]);

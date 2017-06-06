@@ -10,9 +10,4 @@ var CourseSchema = new mongoose.Schema({
   author: String
 });
 
-CourseSchema.methods.upvote = function(cb) {
-  this.upvotes += 1;
-  this.save(cb);
-};
-
 mongoose.model('Course', CourseSchema);

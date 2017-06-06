@@ -7,7 +7,8 @@ var UserSchema = new mongoose.Schema({
   username: {type: String, lowercase: true, unique: true},
   hash: String,
   salt: String,
-  userType: String
+  userType: String,
+  bio: String
 });
 
 UserSchema.methods.validPassword = function(password) {

@@ -107,6 +107,11 @@ router.get('/courses', function (req, res, next) {
 	});
 });
 
+// return a course
+router.get('/courses/:course', function (req, res, next) {
+		res.json(req.course);
+});
+
 // save a course
 router.post('/courses', auth, function (req, res, next) {
 	var course = new Course(req.body);
@@ -119,9 +124,13 @@ router.post('/courses', auth, function (req, res, next) {
 	});
 });
 
-// return a course
-router.get('/courses/:course', function (req, res, next) {
-	req.course.populate('comments', function (err, course) {
+// update a course
+router.put('/courses/:course', auth, function (req, res, next) {
+	req.course.description = req.body.description;
+
+	req.course.save(function (err, course) {
+		if (err) { return next(err); }
+
 		res.json(course);
 	});
 });

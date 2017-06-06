@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Flapper News</title>
+  <title>Certifi</title>
 
 
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
@@ -31,50 +31,7 @@
 
   <script type="text/ng-template" id="/home.html">
     <div class="page-header">
-      <h1>Pro Creditator</h1>
-    </div>
-
-    <div ng-repeat="post in posts | orderBy:'-upvotes'">
-      <span class="glyphicon glyphicon-thumbs-up"
-        ng-click="incrementUpvotes(post)"></span>
-      {{post.upvotes}}
-      <span style="font-size:20px; margin-left:10px;">
-        <a ng-show="post.link" href="{{post.link}}">
-          {{post.title}}
-        </a>
-        <span ng-hide="post.link">
-          {{post.title}}
-        </span>
-      </span>
-      <span ng-show="post.author">
-        posted by {{post.author}} |
-      </span>
-      <span>
-        <a href="#/posts/{{post._id}}">Comments</a>
-      </span>
-    </div>
-
-    <form ng-submit="addPost()"
-      style="margin-top:30px;" ng-show="isLoggedIn()">
-      <h3>Add a new post</h3>
-
-      <div class="form-group">
-        <input type="text"
-        class="form-control"
-        placeholder="Title"
-        ng-model="title"></input>
-      </div>
-      <div class="form-group">
-        <input type="text"
-        class="form-control"
-        placeholder="Link"
-        ng-model="link"></input>
-      </div>
-      <button type="submit" class="btn btn-primary">Post</button>
-    </form>
-
-    <div ng-hide="isLoggedIn()">
-      <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a post.</h3>
+      <h1>Certifi Home</h1>
     </div>
   </script>
 
@@ -192,13 +149,14 @@
 				{{course.description}}
 			</span>
 			<span ng-show="course.author">
-				posted by {{course.author}} |
+				provided by {{course.author}} |
 			</span>
-			<span class="glyphicon glyphicon-pencil" ng-click="removeCourse(course)"></span>
-			<span class="glyphicon glyphicon-remove" ng-click="removeCourse(course)"></span>
+			<span title="Edit Course" class="glyphicon glyphicon-pencil" ng-show="canEditCourses()" ng-click="getCourseForEdit(course);"></span>
+			<span title="Delete Course" class="glyphicon glyphicon-remove" ng-show="canEditCourses()" ng-click="removeCourse(course)"></span>
+			<span title="I completed this!" ng-show="isLoggedIn()" class="glyphicon glyphicon-ok" ng-click="removeCourse(course)"></span>
 		</div>
 		<div>
-			<button type="button" class="btn btn-primary" ng-show="!showAdd" ng-click="showAdd = true;">New Course</button>
+			<button type="button" class="btn btn-primary" ng-show="canEditCourses() && !showAdd" ng-click="showAdd = true;">New Course</button>
 		</div>
 
 		<div ng-show="canEditCourses() && showAdd">
@@ -219,6 +177,28 @@
 				</div>
 				<button type="submit" class="btn btn-primary" ng-click="showAdd = false;">Add Course</button>
 				<button type="reset" class="btn btn-default" ng-click="showAdd = false;">Cancel</button>
+			</form>
+		</div>
+
+		<div ng-show="canEditCourses() && showEdit">
+			<form ng-submit="editCourse()"
+				  style="margin-top:30px;" ng-show="isLoggedIn()">
+				<h3>Edit Course</h3>
+				<div class="form-group">
+					<input type="text"
+						   disabled: true
+						   class="form-control"
+						   placeholder="Title"
+						   ng-model="courseTitleEdit"></input>
+				</div>
+				<div class="form-group">
+					<input type="text"
+						   class="form-control"
+						   placeholder="Description"
+						   ng-model="courseDescriptionEdit"></input>
+				</div>
+				<button type="submit" class="btn btn-primary" ng-click="showEdit = false;">Edit Course</button>
+				<button type="reset" class="btn btn-default" ng-click="showEdit = false;">Cancel</button>
 			</form>
 		</div>
 		<div ng-hide="isLoggedIn()">
