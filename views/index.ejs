@@ -153,7 +153,7 @@
 			</span>
 			<span title="Edit Course" class="glyphicon glyphicon-pencil" ng-show="canEditCourses()" ng-click="getCourseForEdit(course);"></span>
 			<span title="Delete Course" class="glyphicon glyphicon-remove" ng-show="canEditCourses()" ng-click="removeCourse(course)"></span>
-			<span title="I completed this!" ng-show="isLoggedIn()" class="glyphicon glyphicon-ok" ng-click="removeCourse(course)"></span>
+			<span title="I completed this!" ng-show="isLoggedIn()" class="glyphicon glyphicon-ok" ng-click="addCourseToUser(course)"></span>
 		</div>
 		<div>
 			<button type="button" class="btn btn-primary" ng-show="canEditCourses() && !showAdd" ng-click="showAdd = true;">New Course</button>

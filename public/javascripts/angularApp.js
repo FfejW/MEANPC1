@@ -159,6 +159,15 @@ function($stateProvider, $urlRouterProvider) {
 			return false;
 		}
     },
+	addCourse: function(course) {
+		if (auth.isLoggedIn()) {
+			var token = auth.getToken();
+			var payload = JSON.parse($window.atob(token.split('.')[1]));
+			return $http.post('/users/' + payload._id + '/courses', course, {
+				headers: { Authorization: 'Bearer ' + auth.getToken() }
+			});
+		}
+	}
   };
 
   return auth;
@@ -334,5 +343,9 @@ function($scope, auth){
 			});
 			$scope.courseTitleEdit = '';
 			$scope.courseDescriptionEdit = '';
+		}
+
+		$scope.addCourseToUser = function (course) {
+			auth.addCourse(course);
 		}
 	}]);

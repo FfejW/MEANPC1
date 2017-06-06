@@ -57,6 +57,19 @@ router.param('course', function (req, res, next, id) {
 	});
 });
 
+// Preload user objects on routes with ':user'
+router.param('user', function (req, res, next, id) {
+	var query = User.findById(id);
+
+	query.exec(function (err, user) {
+		if (err) { return next(err); }
+		if (!user) { return next(new Error("can't find user")); }
+
+		req.user = user;
+		return next();
+	});
+});
+
 // POSTS
 // get all posts
 router.get('/posts', function (req, res, next) {
@@ -143,6 +156,11 @@ router.delete('/courses/:course', function(req, res, next) {
 		});
 
 	//add authentication
+});
+// add a course to user
+router.post('/users/:user/courses', auth, function (req, res, next) {
+	var course = new Course(req.body);
+	req.user.addCourse(course);
 });
 
 // COMMENTS

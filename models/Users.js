@@ -8,7 +8,8 @@ var UserSchema = new mongoose.Schema({
   hash: String,
   salt: String,
   userType: String,
-  bio: String
+  bio: String,
+  courses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }]
 });
 
 UserSchema.methods.validPassword = function(password) {
@@ -36,6 +37,11 @@ UserSchema.methods.generateJWT = function() {
 	userType: this.userType,
     exp: parseInt(exp.getTime() / 1000),
   }, 'SECRET');
+};
+
+UserSchema.methods.addCourse = function (course) {
+	this.courses.push(course._id);
+	this.save();
 };
 
 mongoose.model('User', UserSchema);
