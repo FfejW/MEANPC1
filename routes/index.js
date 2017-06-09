@@ -70,6 +70,25 @@ router.param('user', function (req, res, next, id) {
 	});
 });
 
+// Preload user objects on routes with ':username'
+router.param('username', function (req, res, next, username) {
+	var query = User.findOne({username: username});
+
+	query.exec(function (err, user) {
+		if (err) { return next(err); }
+		if (!user) { return next(new Error("can't find user")); }
+
+		req.user = user;
+		return next();
+	});
+});
+
+// USERS
+// get a user profile
+router.get('/users/:username', function(req, res, next) {
+	return res.json(req.user.toProfile());
+});
+
 // POSTS
 // get all posts
 router.get('/posts', function (req, res, next) {

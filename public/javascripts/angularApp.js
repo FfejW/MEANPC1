@@ -55,7 +55,17 @@ function($stateProvider, $urlRouterProvider) {
 				return courses.getAll();
 			}]
 		}
-    });
+    })
+	.state('profile', {
+		url: '/users/{username}',
+		templateUrl: '/profile.html',
+		controller: 'UserCtrl',
+		resolve: {
+			user: ['$stateParams', 'auth', function ($stateParams, auth) {
+				return auth.getUserProfile($stateParams.username);
+			}]
+		}
+	});
 
   $urlRouterProvider.otherwise('home');
 }])
@@ -179,7 +189,12 @@ function($stateProvider, $urlRouterProvider) {
         } else {
             return false;
         }
-    }
+    },
+	getUserProfile: function(username) {
+		return $http.get('/users/' + username).then(function (res) {
+			return res.data;
+		});
+	}
   };
 
   return auth;
@@ -230,6 +245,7 @@ function($stateProvider, $urlRouterProvider) {
 'auth',
 function($scope, posts, auth){
   $scope.test = 'Hello world!';
+  $scope.user = auth.getUserProfile;
 
   $scope.posts = posts.posts;
   $scope.isLoggedIn = auth.isLoggedIn;
@@ -249,6 +265,14 @@ function($scope, posts, auth){
   };
 
 }])
+.controller('UserCtrl', [
+	'$scope',
+	'user',
+	'auth',
+	function ($scope, user, auth) {
+		$scope.user = user;
+		$scope.isLoggedIn = auth.isLoggedIn;
+	}])
 .controller('PostsCtrl', [
 '$scope',
 'posts',

@@ -44,4 +44,14 @@ UserSchema.methods.addCourse = function (course) {
 	this.save();
 };
 
+//profile provides user without any of the sensitive stuff
+UserSchema.methods.toProfile = function() {
+	return {
+		username: this.username,
+		bio: this.bio
+		//image
+		//other stuff
+	}
+};
+
 mongoose.model('User', UserSchema);
