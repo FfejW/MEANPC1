@@ -89,6 +89,29 @@ router.get('/users/:username', function(req, res, next) {
 	return res.json(req.user.toProfile());
 });
 
+router.put('/users/:username', auth, function(req, res, next) {
+	req.user.bio = req.body.bio;
+
+	req.user.save(function (err, user){
+		if(err) { return next(err);}
+		res.json(user.toProfile());
+	});
+});
+
+
+
+
+// update a course
+router.put('/courses/:course', auth, function (req, res, next) {
+	req.course.description = req.body.description;
+
+	req.course.save(function (err, course) {
+		if (err) { return next(err); }
+
+		res.json(course);
+	});
+});
+
 // POSTS
 // get all posts
 router.get('/posts', function (req, res, next) {
