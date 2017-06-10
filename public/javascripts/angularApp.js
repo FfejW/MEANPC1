@@ -194,6 +194,13 @@ function($stateProvider, $urlRouterProvider) {
 		return $http.get('/users/' + username).then(function (res) {
 			return res.data;
 		});
+	},
+	update: function (user) {
+		return $http.put('/users/' + user.username, user, {
+			headers: { Authorization: 'Bearer ' + auth.getToken() }
+		}).success(function (data) {
+                //getUserProfile();
+		});
 	}
   };
 
@@ -244,7 +251,6 @@ function($stateProvider, $urlRouterProvider) {
 'posts',
 'auth',
 function($scope, posts, auth){
-  $scope.test = 'Hello world!';
   $scope.user = auth.getUserProfile;
 
   $scope.posts = posts.posts;
@@ -272,6 +278,14 @@ function($scope, posts, auth){
 	function ($scope, user, auth) {
 		$scope.user = user;
 		$scope.isLoggedIn = auth.isLoggedIn;
+		$scope.isEditMode = false;
+
+		$scope.editUser = function() {
+			auth.update({
+				username: $scope.user.username,
+				bio: $scope.user.bio
+			});
+		}
 	}])
 .controller('PostsCtrl', [
 '$scope',
