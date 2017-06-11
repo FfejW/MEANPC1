@@ -46,20 +46,18 @@
 		<div>
 			<h3>{{ user.username }}</h3>
 		</div>
-	<div>
-		<span title="Edit Bio" class="glyphicon glyphicon-pencil" ng-show="!isEditMode" ng-click="isEditMode = true;"></span>
-		<p ng-show="!isEditMode">{{user.bio}}</p>
+		<div>
+			<span title="Edit Bio" class="glyphicon glyphicon-pencil" ng-show="!isEditMode" ng-click="isEditMode = true;"></span>
+			<p ng-show="!isEditMode">{{user.bio}}</p>
 
-		<div ng-show="isEditMode">
-			<form ng-submit="editUser()" style="margin-top:30px;">
-				<textarea ng-model="user.bio" class="form-control" placeholder="Write a short bio!"></textarea>
-				<button type="submit" class="btn btn-primary" ng-click="isEditMode = false;">Save</button>
-				<button type="reset" class="btn btn-default" ng-click="isEditMode = false;">Cancel</button>
-			</form>
+			<div ng-show="isEditMode">
+				<form ng-submit="editUser()" style="margin-top:30px;">
+					<textarea ng-model="user.bio" class="form-control" placeholder="Write a short bio!"></textarea>
+					<button type="submit" class="btn btn-primary" ng-click="isEditMode = false;">Save</button>
+					<button type="reset" class="btn btn-default" ng-click="isEditMode = false;">Cancel</button>
+				</form>
+			</div>
 		</div>
-
-
-	</div>
 	</script>
 
   <script type="text/ng-template" id="/posts.html">
