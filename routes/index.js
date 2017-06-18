@@ -85,12 +85,15 @@ router.param('username', function (req, res, next, username) {
 
 // USERS
 // get a user profile
-router.get('/users/:username', function(req, res, next) {
-	return res.json(req.user.toProfile());
+router.get('/users/:username', function (req, res, next) {
+    req.user.populate('courses', function (err, user) {
+        return res.json(user.toProfile());
+    });
 });
 
 router.put('/users/:username', auth, function(req, res, next) {
-	req.user.bio = req.body.bio;
+    req.user.bio = req.body.bio;
+    req.user.displayname = req.body.displayname;
 
 	req.user.save(function (err, user){
 		if(err) { return next(err);}
@@ -260,6 +263,7 @@ router.post('/register', function(req, res, next){
 
   user.username = req.body.username;
   user.userType = req.body.userType;
+  user.displayname = req.body.username;
 
 	user.setPassword(req.body.password);
 

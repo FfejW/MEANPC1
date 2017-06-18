@@ -146,6 +146,14 @@ function($stateProvider, $urlRouterProvider) {
         return payload.username;
       }
     },
+    currentUserDisplay: function(){
+      if(auth.isLoggedIn()){
+        var token = auth.getToken();
+        var payload = JSON.parse($window.atob(token.split('.')[1]));
+
+        return payload.displayname;
+      }
+    },
     register: function(user){
       return $http.post('/register', user).success(function(data){
         auth.saveToken(data.token);
@@ -279,10 +287,12 @@ function($scope, posts, auth){
 		$scope.user = user;
 		$scope.isLoggedIn = auth.isLoggedIn;
 		$scope.isEditMode = false;
-
+        
+        //can i just pass the $scope.user object to the update function?
 		$scope.editUser = function() {
 			auth.update({
-				username: $scope.user.username,
+                username: $scope.user.username,
+                displayname: $scope.user.displayname,
 				bio: $scope.user.bio
 			});
 		}
@@ -346,6 +356,7 @@ function($scope, $state, auth){
 function($scope, auth){
   $scope.isLoggedIn = auth.isLoggedIn;
   $scope.currentUser = auth.currentUser;
+  $scope.currentUserDisplay = auth.currentUserDisplay;
   $scope.logOut = auth.logOut;
 }])
 .controller('CoursesCtrl', [

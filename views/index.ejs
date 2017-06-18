@@ -15,10 +15,10 @@
 <body ng-app="flapperNews">
   <nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
     <ul class="nav navbar-nav">
-	  <li><a href="/#/users/{{currentUser()}}">{{ currentUser() }}</a></li>
+	  <li ng-show="isLoggedIn()"><a href="/#/users/{{currentUser()}}">{{ currentUserDisplay() }}</a></li>
       <li ng-show="isLoggedIn()"><a href="/#/home">Home</a></li>
 	  <li ng-show="isLoggedIn()"><a href="/#/courses">Courses</a></li>
-      <li ng-show="isLoggedIn()"><a ng-click="logOut()">Log Out</a></li>
+      <li ng-show="isLoggedIn()"><a ng-click="logOut()" href="/#/login">Log Out</a></li>
       <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
       <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
       <li></li>
@@ -35,28 +35,44 @@
       <h1>Certifi Home</h1>
     </div>
 	  <div>
-		  <h3>{{ username() }}</h3>
+		  <h3>You're at the home page! Not sure what should be here yet!</h3>
 	  </div>
   </script>
 
 	<script type="text/ng-template" id="/profile.html">
 		<div class="page-header">
-			<h1>Certifi User</h1>
+			<h1>Certifi Profile</h1>
 		</div>
 		<div>
-			<h3>{{ user.username }}</h3>
-		</div>
-		<div>
+			<h3 ng-show="!isEditMode">{{ user.displayname }}</h3>
 			<span title="Edit Bio" class="glyphicon glyphicon-pencil" ng-show="!isEditMode" ng-click="isEditMode = true;"></span>
+		</div>
+		<div>
 			<p ng-show="!isEditMode">{{user.bio}}</p>
 
 			<div ng-show="isEditMode">
 				<form ng-submit="editUser()" style="margin-top:30px;">
+					<input type="text" ng-model="user.displayname" placeholder="Display Name" class="form-control" />
 					<textarea ng-model="user.bio" class="form-control" placeholder="Write a short bio!"></textarea>
 					<button type="submit" class="btn btn-primary" ng-click="isEditMode = false;">Save</button>
 					<button type="reset" class="btn btn-default" ng-click="isEditMode = false;">Cancel</button>
 				</form>
 			</div>
+		</div>
+
+		<div ng-repeat="course in user.courses">
+			<span style="font-size:20px; margin-left:10px;">
+				<a href="#/courses/{{course._id}}">
+					{{course.title}}
+				</a>
+			</span>
+			<span>
+				{{course.description}}
+			</span>
+			<span ng-show="course.author">
+				provided by {{course.author}}
+			</span>
+			<span title="Print a certificate" ng-show="isLoggedIn()" class="glyphicon glyphicon-print" ng-click="print(course)"></span>
 		</div>
 	</script>
 

@@ -4,7 +4,8 @@ var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 
 var UserSchema = new mongoose.Schema({
-  username: {type: String, lowercase: true, unique: true},
+  username: { type: String, lowercase: true, unique: true },
+  displayname: String,
   hash: String,
   salt: String,
   userType: String,
@@ -34,6 +35,7 @@ UserSchema.methods.generateJWT = function() {
   return jwt.sign({
     _id: this._id,
     username: this.username,
+    displayname: this.displayname,
 	userType: this.userType,
     exp: parseInt(exp.getTime() / 1000),
   }, 'SECRET');
@@ -46,9 +48,11 @@ UserSchema.methods.addCourse = function (course) {
 
 //profile provides user without any of the sensitive stuff
 UserSchema.methods.toProfile = function() {
-	return {
-		username: this.username,
-		bio: this.bio
+    return {
+        username: this.username,
+        displayname: this.displayname,
+        bio: this.bio,
+        courses: this.courses
 		//image
 		//other stuff
 	}
