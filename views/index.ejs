@@ -40,79 +40,64 @@
   </script>
 
 	<script type="text/ng-template" id="/profile.html">
-		<div class="page-header">
-			<h1>Certifi Profile</h1>
-		</div>
-		<div>
-			<h3 ng-show="!isEditMode">{{ user.displayname }}</h3>
-			<span title="Edit Bio" class="glyphicon glyphicon-pencil" ng-show="!isEditMode" ng-click="isEditMode = true;"></span>
-		</div>
-		<div>
-			<p ng-show="!isEditMode">{{user.bio}}</p>
-
-			<div ng-show="isEditMode">
-				<form ng-submit="editUser()" style="margin-top:30px;">
-					<input type="text" ng-model="user.displayname" placeholder="Display Name" class="form-control" />
-					<textarea ng-model="user.bio" class="form-control" placeholder="Write a short bio!"></textarea>
-					<button type="submit" class="btn btn-primary" ng-click="isEditMode = false;">Save</button>
-					<button type="reset" class="btn btn-default" ng-click="isEditMode = false;">Cancel</button>
-				</form>
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h3 class="panel-title">{{ user.displayname }}</h3>
+			</div>
+			<div class="panel-body">
+				<div>
+					<div class="col-md-3 col-lg-3" align="center">
+						<img alt="User Pic" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/UserAvatar.svg/2000px-UserAvatar.svg.png" class="img-circle img-responsive">
+						<span title="Edit Bio" class="glyphicon glyphicon-pencil" ng-show="!isEditMode" ng-click="isEditMode = true;"></span>
+					</div>
+					<div class="col-md-9 col-lg-9">
+						<table class="table table-user-information">
+							<tbody>
+								<tr>
+									<td>BIO:</td>
+									<td>{{user.bio}}</td>
+								</tr>
+								<tr>
+									<td>Other:</td>
+									<td>Other</td>
+								</tr>
+								<tr>
+									<td>Other:</td>
+									<td>Other</td>
+								</tr>
+								<tr>
+									<td>Other:</td>
+									<td>Other</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
 
-		<div ng-repeat="course in user.courses">
-			<span style="font-size:20px; margin-left:10px;">
-				<a href="#/courses/{{course._id}}">
-					{{course.title}}
-				</a>
-			</span>
-			<span>
-				{{course.description}}
-			</span>
-			<span ng-show="course.author">
-				provided by {{course.author}}
-			</span>
-			<span title="Print a certificate" ng-show="isLoggedIn()" class="glyphicon glyphicon-print" ng-click="print(course)"></span>
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h3 class="panel-title">My Courses</h3>
+			</div>
+			<div class="panel-body">
+				<div ng-repeat="course in user.courses" class="row">
+					<span style="font-size:20px; margin-left:10px;">
+						<a href="#/courses/{{course._id}}">
+							{{course.title}}
+						</a>
+					</span>
+					<span>
+						{{course.description}}
+					</span>
+					<span ng-show="course.author">
+						provided by {{course.author}}
+					</span>
+					<span title="Print a certificate" ng-show="isLoggedIn()" class="glyphicon glyphicon-print" ng-click="print(course)"></span>
+				</div>
+			</div>
 		</div>
 	</script>
-
-  <script type="text/ng-template" id="/posts.html">
-    <div class="page-header">
-      <h3>
-        <a ng-show="post.link" href="{{post.link}}">
-          {{post.title}}
-        </a>
-        <span ng-hide="post.link">
-          {{post.title}}
-        </span>
-      </h3>
-    </div>
-
-    <div ng-repeat="comment in post.comments | orderBy:'-upvotes'">
-      <span class="glyphicon glyphicon-thumbs-up"
-        ng-click="incrementUpvotes(comment)"></span>
-      {{comment.upvotes}} - by <a>{{comment.author}}</a>
-      <span style="font-size:20px; margin-left:10px;">
-        {{comment.body}}
-      </span>
-    </div>
-    <form ng-submit="addComment()"
-      style="margin-top:30px;" ng-show="isLoggedIn()">
-      <h3>Add a new comment</h3>
-
-      <div class="form-group">
-        <input type="text"
-        class="form-control"
-        placeholder="Comment"
-        ng-model="body"></input>
-      </div>
-      <button type="submit" class="btn btn-primary">Post</button>
-    </form>
-
-    <div ng-hide="isLoggedIn()">
-      <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can comment.</h3>
-    </div>
-  </script>
 
   <script type="text/ng-template" id="/login.html">
     <div class="page-header">
