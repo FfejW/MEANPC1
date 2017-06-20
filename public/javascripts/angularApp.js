@@ -287,6 +287,8 @@ function($scope, posts, auth){
 		$scope.user = user;
 		$scope.isLoggedIn = auth.isLoggedIn;
 		$scope.isEditMode = false;
+		$scope.isNameEditMode = false;
+		$scope.orignalUser = user;
         
         //can i just pass the $scope.user object to the update function?
 		$scope.editUser = function() {
@@ -295,6 +297,11 @@ function($scope, posts, auth){
                 displayname: $scope.user.displayname,
 				bio: $scope.user.bio
 			});
+
+			$scope.orignalUser = user;
+		}
+		$scope.cancelUpdate = function () {
+			$scope.user = $scope.orignalUser;
 		}
 	}])
 .controller('PostsCtrl', [
