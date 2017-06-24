@@ -47,6 +47,11 @@ UserSchema.methods.addCourse = function (course) {
 	this.save();
 };
 
+UserSchema.methods.addCertification = function (certification) {
+    this.certifications.push(certification._id);
+    this.save();
+};
+
 //profile provides user without any of the sensitive stuff
 UserSchema.methods.toProfile = function() {
     return {

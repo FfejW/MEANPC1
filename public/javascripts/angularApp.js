@@ -56,6 +56,16 @@ function($stateProvider, $urlRouterProvider) {
 			}]
 		}
     })
+    .state('certifications', {
+            url: '/certifications',
+            templateUrl: '/certifications.html',
+            controller: 'CertificationsCtrl',
+            resolve: {
+                certificationPromise: ['certifications', function (certifications) {
+                        return certifications.getAll();
+                    }]
+            }
+        })
 	.state('profile', {
 		url: '/users/{username}',
 		templateUrl: '/profile.html',
@@ -198,6 +208,37 @@ function($stateProvider, $urlRouterProvider) {
             return false;
         }
     },
+	addCertification: function(certification) {
+		if (auth.isLoggedIn()) {
+			var token = auth.getToken();
+			var payload = JSON.parse($window.atob(token.split('.')[1]));
+			return $http.post('/users/' + payload._id + '/certifications', certification, {
+				headers: { Authorization: 'Bearer ' + auth.getToken() }
+			});
+		}
+	},
+    canEditCertifications: function () {
+		var token = auth.getToken();
+
+        if (token) {
+			var payload = JSON.parse($window.atob(token.split('.')[1]));
+
+			return payload.userType !== "Professional";
+		} else {
+			return false;
+		}
+    },
+    isCertificationEditable: function (certification) {
+        var token = auth.getToken();
+                
+        if (token) {
+            var payload = JSON.parse($window.atob(token.split('.')[1]));
+                    
+            return payload.username === certification.author;
+        } else {
+            return false;
+        }
+    },
 	getUserProfile: function(username) {
 		return $http.get('/users/' + username).then(function (res) {
 			return res.data;
@@ -248,12 +289,50 @@ function($stateProvider, $urlRouterProvider) {
 		}).success(function (data) {
 			//o.courses.splice(o.courses.lastIndexOf(course), 1);
 			//o.courses.push(data);
-                getAll();
+                o.getAll();
 		});
 	};
 
 	return o;
-}])
+ }])
+.factory('certifications', ['$http', 'auth', function ($http, auth) {
+        var o = {
+            certifications: []
+        };
+        
+        o.getAll = function () {
+            return $http.get('/certifications').success(function (data) {
+                angular.copy(data, o.certifications);
+            });
+        };
+        
+        o.create = function (certification) {
+            return $http.post('/certifications', certification, {
+                headers: { Authorization: 'Bearer ' + auth.getToken() }
+            }).success(function (data) {
+                o.certifications.push(data);
+            });
+        };
+        
+        o.delete = function (certification) {
+            return $http.delete('/certifications/' + certification._id)
+			.success(function () {
+                o.certifications.splice(o.certifications.lastIndexOf(certification), 1);
+            }, function (response) {
+				//o fuck
+            });
+        }
+        
+        o.update = function (certification) {
+            return $http.put('/certifications/' + certification._id, certification, {
+                headers: { Authorization: 'Bearer ' + auth.getToken() }
+            }).success(function (data) {
+                o.getAll();
+            });
+        };
+        
+        return o;
+    }])
 .controller('MainCtrl', [
 '$scope',
 'posts',
@@ -413,4 +492,52 @@ function($scope, auth){
         $scope.isEditable = function (course){
             return auth.isEditable(course);// === course.author;
         }
-	}]);
+    }])
+.controller('CertificationsCtrl', [
+    '$scope',
+    'certifications',
+    'auth',
+    function ($scope, certifications, auth) {
+        $scope.certifications = certifications.certifications;
+        $scope.isLoggedIn = auth.isLoggedIn;
+        $scope.canEditCertifications = auth.canEditCertifications;
+        
+        $scope.addCertification = function () {
+            if ($scope.certificationTitle === '') { return; }
+            certifications.create({
+                title: $scope.certificationTitle,
+                description: $scope.certificationDescription
+            });
+            $scope.certificationTitle = '';
+            $scope.certificationDescription = '';
+        };
+        
+        $scope.removeCertification = function (certification) {
+            certifications.delete(certification);
+        }
+        
+        $scope.getCertificationForEdit = function (certification) {
+            $scope.certificationIdEdit = certification._id;
+            $scope.certificationTitleEdit = certification.title;
+            $scope.certificationDescriptionEdit = certification.description;
+            $scope.showEdit = true;
+        }
+        
+        $scope.editCertification = function () {
+            certifications.update({
+                _id: $scope.certificationIdEdit,
+                description: $scope.certificationDescriptionEdit
+            });
+            $scope.certificationTitleEdit = '';
+            $scope.certificationDescriptionEdit = '';
+            $scope.certifications = certifications.certifications;
+        }
+        
+        $scope.addCertificationToUser = function (certification) {
+            auth.addCertification(certification);
+        }
+        
+        $scope.isEditable = function (certification) {
+            return auth.isCertificationEditable(certification);// === certification.author;
+        }
+    }]);

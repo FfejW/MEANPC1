@@ -13,6 +13,7 @@ require('./models/Posts');
 require('./models/Comments');
 require('./models/Users');
 require('./models/Courses');
+require('./models/Certifications');
 
 require('./config/passport');
 

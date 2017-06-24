@@ -30,6 +30,7 @@
     <Content Include="views\index.ejs" />
     <Compile Include="public\javascripts\angularApp.js" />
     <Content Include="public\stylesheets\style.css" />
+    <Content Include="views\partials\certifications.ejs" />
     <Content Include="views\partials\home.ejs" />
     <Content Include="views\partials\profile.ejs" />
     <Content Include="views\partials\register.ejs" />

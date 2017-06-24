@@ -14,6 +14,7 @@ var Post = mongoose.model('Post');
 var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
 var Course = mongoose.model('Course');
+var Certification = mongoose.model('Certification');
 
 var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 
@@ -57,6 +58,19 @@ router.param('course', function (req, res, next, id) {
 	});
 });
 
+// Preload certification objects on routes with ':certification'
+router.param('certification', function (req, res, next, id) {
+    var query = Certification.findById(id);
+    
+    query.exec(function (err, certification) {
+        if (err) { return next(err); }
+        if (!certification) { return next(new Error("can't find certification")); }
+        
+        req.certification = certification;
+        return next();
+    });
+});
+
 // Preload user objects on routes with ':user'
 router.param('user', function (req, res, next, id) {
 	var query = User.findById(id);
@@ -98,20 +112,6 @@ router.put('/users/:username', auth, function(req, res, next) {
 	req.user.save(function (err, user){
 		if(err) { return next(err);}
 		res.json(user.toProfile());
-	});
-});
-
-
-
-
-// update a course
-router.put('/courses/:course', auth, function (req, res, next) {
-	req.course.description = req.body.description;
-
-	req.course.save(function (err, course) {
-		if (err) { return next(err); }
-
-		res.json(course);
 	});
 });
 
@@ -206,6 +206,59 @@ router.delete('/courses/:course', function(req, res, next) {
 router.post('/users/:user/courses', auth, function (req, res, next) {
 	var course = new Course(req.body);
 	req.user.addCourse(course);
+});
+
+// CERTIFICATIONS
+// get all certifications
+router.get('/certifications', function (req, res, next) {
+    Certification.find(function (err, certifications) {
+        if (err) { return next(err); }
+        
+        res.json(certifications);
+    });
+});
+
+// return a certification
+router.get('/certifications/:certification', function (req, res, next) {
+    res.json(req.certification);
+});
+
+// save a certification
+router.post('/certifications', auth, function (req, res, next) {
+    var certification = new Certification(req.body);
+    certification.author = req.payload.username;
+    
+    certification.save(function (err, certification) {
+        if (err) { return next(err); }
+        
+        res.json(certification);
+    });
+});
+
+// update a certification
+router.put('/certifications/:certification', auth, function (req, res, next) {
+    req.certification.description = req.body.description;
+    
+    req.certification.save(function (err, certification) {
+        if (err) { return next(err); }
+        
+        res.json(certification);
+    });
+});
+
+// delete a certification
+router.delete('/certifications/:certification', function (req, res, next) {
+    return req.certification.remove()
+		.then(function () {
+        return res.sendStatus(204);
+    });
+
+	//add authentication
+});
+// add a certification to user
+router.post('/users/:user/certifications', auth, function (req, res, next) {
+    var certification = new Certification(req.body);
+    req.user.addCertification(certification);
 });
 
 // COMMENTS
