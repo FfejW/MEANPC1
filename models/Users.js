@@ -3,14 +3,15 @@ var mongoose = require('mongoose');
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 
-var UserSchema = new mongoose.Schema({
-  username: { type: String, lowercase: true, unique: true },
-  displayname: String,
-  hash: String,
-  salt: String,
-  userType: String,
-  bio: String,
-  courses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }]
+var UserSchema = new mongoose.Schema( {
+    username: { type: String, lowercase: true, unique: true },
+    displayname: String,
+    hash: String,
+    salt: String,
+    userType: String,
+    bio: String,
+    courses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
+    certifications: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Certification'}]
 });
 
 UserSchema.methods.validPassword = function(password) {
@@ -52,7 +53,8 @@ UserSchema.methods.toProfile = function() {
         username: this.username,
         displayname: this.displayname,
         bio: this.bio,
-        courses: this.courses
+        courses: this.courses,
+        certifications: this.certifications
 		//image
 		//other stuff
 	}

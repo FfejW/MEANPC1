@@ -21,6 +21,7 @@
     <Compile Include="app.js" />
     <Compile Include="config\passport.js" />
     <Compile Include="models\Comments.js" />
+    <Compile Include="models\Certifications.js" />
     <Compile Include="models\Courses.js" />
     <Compile Include="models\Posts.js" />
     <Compile Include="models\Users.js" />
@@ -29,6 +30,11 @@
     <Content Include="views\index.ejs" />
     <Compile Include="public\javascripts\angularApp.js" />
     <Content Include="public\stylesheets\style.css" />
+    <Content Include="views\partials\home.ejs" />
+    <Content Include="views\partials\profile.ejs" />
+    <Content Include="views\partials\register.ejs" />
+    <Content Include="views\partials\login.ejs" />
+    <Content Include="views\partials\courses.ejs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin" />
@@ -39,6 +45,7 @@
     <Folder Include="public\stylesheets" />
     <Folder Include="routes" />
     <Folder Include="views" />
+    <Folder Include="views\partials\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->

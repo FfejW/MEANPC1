@@ -1,0 +1,70 @@
+﻿<script type="text/ng-template" id="/courses.html">
+	<div class="page-header">
+		<h1>Courses</h1>
+	</div>
+	<div ng-repeat="course in courses">
+		<span style="font-size:20px; margin-left:10px;">
+			<a href="#/courses/{{course._id}}">
+				{{course.title}}
+			</a>
+		</span>
+		<span>
+			{{course.description}}
+		</span>
+		<span ng-show="course.author">
+			provided by {{course.author}} |
+		</span>
+		<span title="Edit Course" class="glyphicon glyphicon-pencil" ng-show="isEditable(course)" ng-click="getCourseForEdit(course);"></span>
+		<span title="Delete Course" class="glyphicon glyphicon-remove" ng-show="isEditable(course)" ng-click="removeCourse(course)"></span>
+		<span title="I completed this!" ng-show="isLoggedIn()" class="glyphicon glyphicon-ok" ng-click="addCourseToUser(course)"></span>
+	</div>
+	<div>
+		<button type="button" class="btn btn-primary" ng-show="canEditCourses() && !showAdd" ng-click="showAdd = true;">New Course</button>
+	</div>
+
+	<div ng-show="canEditCourses() && showAdd">
+		<form ng-submit="addCourse()"
+			  style="margin-top:30px;" ng-show="isLoggedIn()">
+			<h3>Add a New Course</h3>
+			<div class="form-group">
+				<input type="text"
+					   class="form-control"
+					   placeholder="Title"
+					   ng-model="courseTitle"></input>
+			</div>
+			<div class="form-group">
+				<input type="text"
+					   class="form-control"
+					   placeholder="Description"
+					   ng-model="courseDescription"></input>
+			</div>
+			<button type="submit" class="btn btn-primary" ng-click="showAdd = false;">Add Course</button>
+			<button type="reset" class="btn btn-default" ng-click="showAdd = false;">Cancel</button>
+		</form>
+	</div>
+
+	<div ng-show="canEditCourses() && showEdit">
+		<form ng-submit="editCourse()"
+			  style="margin-top:30px;" ng-show="isLoggedIn()">
+			<h3>Edit Course</h3>
+			<div class="form-group">
+				<input type="text"
+					   disabled true
+					   class="form-control"
+					   placeholder="Title"
+					   ng-model="courseTitleEdit"></input>
+			</div>
+			<div class="form-group">
+				<input type="text"
+					   class="form-control"
+					   placeholder="Description"
+					   ng-model="courseDescriptionEdit"></input>
+			</div>
+			<button type="submit" class="btn btn-primary" ng-click="showEdit = false;">Edit Course</button>
+			<button type="reset" class="btn btn-default" ng-click="showEdit = false;">Cancel</button>
+		</form>
+	</div>
+	<div ng-hide="isLoggedIn()">
+		<h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a course.</h3>
+	</div>
+</script>
