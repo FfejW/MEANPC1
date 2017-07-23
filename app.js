@@ -9,8 +9,6 @@ var passport = require('passport');
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/certifi');
 
-require('./models/Posts');
-require('./models/Comments');
 require('./models/Users');
 require('./models/Courses');
 require('./models/Certifications');

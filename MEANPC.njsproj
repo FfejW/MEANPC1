@@ -21,10 +21,8 @@
     <Compile Include="app.js" />
     <Compile Include="config\passport.js" />
     <Compile Include="controllers\home.js" />
-    <Compile Include="models\Comments.js" />
     <Compile Include="models\Certifications.js" />
     <Compile Include="models\Courses.js" />
-    <Compile Include="models\Posts.js" />
     <Compile Include="models\Users.js" />
     <Compile Include="routes\index.js" />
     <Content Include="views\error.ejs" />
