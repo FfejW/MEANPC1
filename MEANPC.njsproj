@@ -20,6 +20,9 @@
     <Content Include="README.md" />
     <Compile Include="app.js" />
     <Compile Include="config\passport.js" />
+    <Compile Include="controllers\auth.js" />
+    <Compile Include="controllers\certifications.js" />
+    <Compile Include="controllers\courses.js" />
     <Compile Include="controllers\home.js" />
     <Compile Include="models\Certifications.js" />
     <Compile Include="models\Courses.js" />
