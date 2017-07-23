@@ -13,7 +13,7 @@
 		<nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
 		<ul class="nav navbar-nav">
 			<li ng-show="isLoggedIn()"><a href="/#/users/{{currentUser()}}">{{ currentUserDisplay() }}</a></li>
-			<li ng-show="isLoggedIn()"><a href="/#/home">Home</a></li>
+			<li ng-show="isLoggedIn()"><a href="/#/home/{{currentUser()}}">Home</a></li>
 			<li ng-show="isLoggedIn()"><a href="/#/courses">Courses</a></li>
 			<li ng-show="isLoggedIn()"><a href="/#/certifications">Certifications</a></li>
 			<li ng-show="isLoggedIn()"><a ng-click="logOut()" href="/#/login">Log Out</a></li>

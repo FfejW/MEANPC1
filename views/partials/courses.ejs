@@ -2,6 +2,9 @@
 	<div class="page-header">
 		<h1>Courses</h1>
 	</div>
+	<div ng-repeat="certification in certifications">
+		-{{certification.title}}-
+	</div>
 	<div ng-repeat="course in courses">
 		<span style="font-size:20px; margin-left:10px;">
 			<a href="#/courses/{{course._id}}">
@@ -38,6 +41,12 @@
 					   placeholder="Description"
 					   ng-model="courseDescription"></input>
 			</div>
+			<div class="form-group">
+				<input type="text"
+					   class="form-control"
+					   placeholder="Certification"
+					   ng-model="courseCertification"></input>
+			</div>
 			<button type="submit" class="btn btn-primary" ng-click="showAdd = false;">Add Course</button>
 			<button type="reset" class="btn btn-default" ng-click="showAdd = false;">Cancel</button>
 		</form>
@@ -59,6 +68,12 @@
 					   class="form-control"
 					   placeholder="Description"
 					   ng-model="courseDescriptionEdit"></input>
+			</div>
+			<div class="form-group">
+				<input type="text"
+					   class="form-control"
+					   placeholder="Certification"
+					   ng-model="courseCertificationEdit"></input>
 			</div>
 			<button type="submit" class="btn btn-primary" ng-click="showEdit = false;">Edit Course</button>
 			<button type="reset" class="btn btn-default" ng-click="showEdit = false;">Cancel</button>

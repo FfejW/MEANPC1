@@ -7,14 +7,14 @@ function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
     .state('home', {
-      url: '/home',
+      url: '/home/{username}',
       templateUrl: '/home.html',
-      controller: 'MainCtrl',
-      resolve: {
-        postPromise: ['posts', function(posts){
-          return posts.getAll();
-        }]
-      }
+      controller: 'HomeCtrl',
+		resolve: {
+			user: ['$stateParams', 'auth', function ($stateParams, auth) {
+				return auth.getUserProfile($stateParams.username);
+			}]
+		}
     })
     .state('posts', {
       url: '/posts/{id}',
@@ -358,6 +358,14 @@ function($scope, posts, auth){
   };
 
 }])
+.controller('HomeCtrl', [
+    '$scope',
+    'user',
+    'auth',
+    function ($scope, user, auth) {
+        $scope.user = user;
+        $scope.isLoggedIn = auth.isLoggedIn;
+    }])
 .controller('UserCtrl', [
 	'$scope',
 	'user',
@@ -367,7 +375,9 @@ function($scope, posts, auth){
 		$scope.isLoggedIn = auth.isLoggedIn;
 		$scope.isEditMode = false;
 		$scope.isNameEditMode = false;
-		$scope.orignalUser = user;
+        $scope.orignalUser = user;
+        
+        //foreach cert, aggregate related courses
         
         //can i just pass the $scope.user object to the update function?
 		$scope.editUser = function() {
@@ -448,9 +458,11 @@ function($scope, auth){
 .controller('CoursesCtrl', [
 	'$scope',
 	'courses',
-	'auth',
-	function ($scope, courses, auth) {
+    'auth',
+    'certifications',
+	function ($scope, courses, auth, certifications) {
 		$scope.courses = courses.courses;
+        $scope.certifications = certifications.getAll();
 		$scope.isLoggedIn = auth.isLoggedIn;
         $scope.canEditCourses = auth.canEditCourses;
 

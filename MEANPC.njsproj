@@ -20,6 +20,7 @@
     <Content Include="README.md" />
     <Compile Include="app.js" />
     <Compile Include="config\passport.js" />
+    <Compile Include="controllers\home.js" />
     <Compile Include="models\Comments.js" />
     <Compile Include="models\Certifications.js" />
     <Compile Include="models\Courses.js" />
@@ -41,6 +42,7 @@
     <Folder Include="bin" />
     <Folder Include="config" />
     <Folder Include="models" />
+    <Folder Include="controllers\" />
     <Folder Include="public" />
     <Folder Include="public\javascripts" />
     <Folder Include="public\stylesheets" />

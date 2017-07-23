@@ -101,7 +101,9 @@ router.param('username', function (req, res, next, username) {
 // get a user profile
 router.get('/users/:username', function (req, res, next) {
     req.user.populate('courses', function (err, user) {
-        return res.json(user.toProfile());
+        user.populate('certifications', function (err, user) {
+            return res.json(user.toProfile());
+        });
     });
 });
 

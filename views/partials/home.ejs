@@ -1,10 +1,63 @@
 ﻿
-
-  <script type="text/ng-template" id="/home.html">
-    <div class="page-header">
-      <h1>Certifi Home</h1>
-    </div>
-	  <div>
-		  <h3>You're at the home page! Not sure what should be here yet!</h3>
-	  </div>
-  </script>
+<script type="text/ng-template" id="/home.html">
+	<div class="page-header">
+		<h1>Certifi Home</h1>
+	</div>
+	<div>
+		<h3>Your Profile</h3>
+		<a href="/#/users/{{currentUser()}}">Update Profile</a>
+	</div>
+	<div>
+  		<h3>Your Certifications</h3>
+		<div ng-repeat="certification in user.certifications">
+			<div>
+				<div class="container  table-responsive">
+					<h3>{{certification.title}}</h3>
+					<p>{{certification.description}}</p>
+					<table class="table table-bordered ">
+						<thead>
+							<tr>
+								<th>PDC Type</th>
+								<th>Maximum Allowed</th>
+								<th>PDCs Earned</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Eductaion</td>
+								<td>50.00</td>
+								<td>5.00</td>
+							</tr>
+							<tr>
+								<td>Self Directed</td>
+								<td>25.00</td>
+								<td>15.00</td>
+							</tr>
+							<tr>
+								<td>Organization</td>
+								<td>30.00</td>
+								<td>0.00</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel-body">
+		<div ng-repeat="course in user.courses" class="row">
+			<span style="font-size:20px; margin-left:10px;">
+				<a href="#/courses/{{course._id}}">
+					{{course.title}}
+				</a>
+			</span>
+			<span>
+				{{course.description}}
+			</span>
+			<span ng-show="course.author">
+				provided by {{course.author}}
+			</span>
+			<span title="Print a certificate" ng-show="isLoggedIn()" class="glyphicon glyphicon-print" ng-click="print(course)"></span>
+		</div>
+	</div>
+</script>
