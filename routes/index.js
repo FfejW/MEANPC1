@@ -9,7 +9,7 @@ var authController = require('../controllers/auth.js')
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Certifi Home' });
 });
 //does the above even work anymore
 

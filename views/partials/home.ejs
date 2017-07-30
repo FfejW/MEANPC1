@@ -3,61 +3,52 @@
 	<div class="page-header">
 		<h1>Certifi Home</h1>
 	</div>
-	<div>
-		<h3>Your Profile</h3>
-		<a href="/#/users/{{currentUser()}}">Update Profile</a>
-	</div>
-	<div>
-  		<h3>Your Certifications</h3>
-		<div ng-repeat="certification in user.certifications">
-			<div>
-				<div class="container  table-responsive">
-					<h3>{{certification.title}}</h3>
-					<p>{{certification.description}}</p>
-					<table class="table table-bordered ">
-						<thead>
-							<tr>
-								<th>PDC Type</th>
-								<th>Maximum Allowed</th>
-								<th>PDCs Earned</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Eductaion</td>
-								<td>50.00</td>
-								<td>5.00</td>
-							</tr>
-							<tr>
-								<td>Self Directed</td>
-								<td>25.00</td>
-								<td>15.00</td>
-							</tr>
-							<tr>
-								<td>Organization</td>
-								<td>30.00</td>
-								<td>0.00</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+	<div class="panel panel-info">
+		<div class="panel-heading">Your Profile</div>
+		<div class="panel-body">
+			<div class="col-md-6">
+				<div class="row">Name: Jeff</div>
+				<div class="row">Profile: All the killer stuff you do.</div>
 			</div>
 		</div>
 	</div>
-	<div class="panel-body">
-		<div ng-repeat="course in user.courses" class="row">
-			<span style="font-size:20px; margin-left:10px;">
-				<a href="#/courses/{{course._id}}">
-					{{course.title}}
-				</a>
-			</span>
-			<span>
-				{{course.description}}
-			</span>
-			<span ng-show="course.author">
-				provided by {{course.author}}
-			</span>
-			<span title="Print a certificate" ng-show="isLoggedIn()" class="glyphicon glyphicon-print" ng-click="print(course)"></span>
+	<div class="panel panel-info">
+		<div class="panel-heading">Certifications</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-12">
+					Bovine Professional					
+					&nbsp;<a data-target="#details1" data-toggle="collapse">PDC Summary</a>
+					&nbsp;<a data-target="#courses1" data-toggle="collapse">Courses</a>
+				</div>
+			</div>
+			<div class="collapse" id="details1">
+				<div class="col-md-12">BP PDCs</div>
+			</div>
+			<div class="collapse" id="courses1">
+				<div class="col-md-12">
+					BP Courses
+					<div class="row"><div class="col-md-12">BP Class1</div></div>
+					<div class="row"><div class="col-md-12">BP Class2</div></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					Farm Management
+					&nbsp;<a data-target="#details2" data-toggle="collapse">PDC Summary</a>
+					&nbsp;<a data-target="#courses2" data-toggle="collapse">Courses</a>
+				</div>
+			</div>
+			<div class="panel-collapse collapse" id="details2">
+				<div class="col-md-12">FM PDCs</div>
+			</div>
+			<div class="collapse" id="courses2">
+				<div class="col-md-12">
+					FM Courses
+					<div class="row"><div class="col-md-12">FM Class1</div></div>
+					<div class="row"><div class="col-md-12">FM Class2</div></div>
+				</div>
+			</div>
 		</div>
 	</div>
 </script>
