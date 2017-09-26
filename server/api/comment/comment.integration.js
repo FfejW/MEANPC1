@@ -35,8 +35,8 @@ describe('Comment API:', function() {
       request(app)
         .post('/api/comments')
         .send({
-          name: 'New Comment',
-          info: 'This is the brand new comment!!!'
+          body: 'New Comment',
+          author: 'Test User'
         })
         .expect(201)
         .expect('Content-Type', /json/)
@@ -50,8 +50,8 @@ describe('Comment API:', function() {
     });
 
     it('should respond with the newly created comment', function() {
-      newComment.name.should.equal('New Comment');
-      newComment.info.should.equal('This is the brand new comment!!!');
+      newComment.body.should.equal('New Comment');
+      newComment.author.should.equal('Test User');
     });
   });
 
@@ -77,8 +77,8 @@ describe('Comment API:', function() {
     });
 
     it('should respond with the requested comment', function() {
-      comment.name.should.equal('New Comment');
-      comment.info.should.equal('This is the brand new comment!!!');
+      comment.body.should.equal('New Comment');
+      comment.author.should.equal('Test User');
     });
   });
 
@@ -89,8 +89,8 @@ describe('Comment API:', function() {
       request(app)
         .put(`/api/comments/${newComment._id}`)
         .send({
-          name: 'Updated Comment',
-          info: 'This is the updated comment!!!'
+          body: 'Updated Comment',
+          author: 'Test User'
         })
         .expect(200)
         .expect('Content-Type', /json/)
@@ -108,8 +108,8 @@ describe('Comment API:', function() {
     });
 
     it('should respond with the updated comment', function() {
-      updatedComment.name.should.equal('Updated Comment');
-      updatedComment.info.should.equal('This is the updated comment!!!');
+      updatedComment.body.should.equal('Updated Comment');
+      updatedComment.author.should.equal('Test User');
     });
 
     it('should respond with the updated comment on a subsequent GET', function(done) {
@@ -123,8 +123,8 @@ describe('Comment API:', function() {
           }
           let comment = res.body;
 
-          comment.name.should.equal('Updated Comment');
-          comment.info.should.equal('This is the updated comment!!!');
+          comment.body.should.equal('Updated Comment');
+          comment.author.should.equal('Test User');
 
           done();
         });
@@ -138,8 +138,8 @@ describe('Comment API:', function() {
       request(app)
         .patch(`/api/comments/${newComment._id}`)
         .send([
-          { op: 'replace', path: '/name', value: 'Patched Comment' },
-          { op: 'replace', path: '/info', value: 'This is the patched comment!!!' }
+          { op: 'replace', path: '/body', value: 'Patched Comment' },
+          { op: 'replace', path: '/author', value: 'Test User' }
         ])
         .expect(200)
         .expect('Content-Type', /json/)
@@ -157,8 +157,8 @@ describe('Comment API:', function() {
     });
 
     it('should respond with the patched comment', function() {
-      patchedComment.name.should.equal('Patched Comment');
-      patchedComment.info.should.equal('This is the patched comment!!!');
+      patchedComment.body.should.equal('Patched Comment');
+      patchedComment.author.should.equal('Test User');
     });
   });
 
