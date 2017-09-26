@@ -57,3 +57,5 @@ dist
 /server/config/local.env.js
 npm-debug.log
 coverage
+client/assets/fonts
+*.swp
