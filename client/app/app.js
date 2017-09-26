@@ -25,12 +25,14 @@ import main from './main/main.component';
 import constants from './app.constants';
 import util from '../components/util/util.module';
 import socket from '../components/socket/socket.service';
+import CertificationsComponent from './certifications/certifications.component';
+import CoursesComponent from './courses/courses.component';
 
 import './app.scss';
 
 angular.module('meanpc1App', [ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter,
   uiBootstrap, _Auth, account, admin, 'validation.match', navbar, footer, main, constants,
-  socket, util
+  socket, util, CertificationsComponent, CoursesComponent
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {
