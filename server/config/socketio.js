@@ -20,7 +20,6 @@ function onConnect(socket) {
   require('../api/comment/comment.socket').register(socket);
   require('../api/certification/certification.socket').register(socket);
   require('../api/course/course.socket').register(socket);
-  require('../api/thing/thing.socket').register(socket);
 }
 
 export default function(socketio) {
