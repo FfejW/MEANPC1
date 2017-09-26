@@ -35,8 +35,8 @@ describe('Certification API:', function() {
       request(app)
         .post('/api/certifications')
         .send({
-          name: 'New Certification',
-          info: 'This is the brand new certification!!!'
+          title: 'New Certification',
+          description: 'This is the brand new certification!!!'
         })
         .expect(201)
         .expect('Content-Type', /json/)
@@ -50,8 +50,8 @@ describe('Certification API:', function() {
     });
 
     it('should respond with the newly created certification', function() {
-      newCertification.name.should.equal('New Certification');
-      newCertification.info.should.equal('This is the brand new certification!!!');
+      newCertification.title.should.equal('New Certification');
+      newCertification.description.should.equal('This is the brand new certification!!!');
     });
   });
 
@@ -77,8 +77,8 @@ describe('Certification API:', function() {
     });
 
     it('should respond with the requested certification', function() {
-      certification.name.should.equal('New Certification');
-      certification.info.should.equal('This is the brand new certification!!!');
+      certification.title.should.equal('New Certification');
+      certification.description.should.equal('This is the brand new certification!!!');
     });
   });
 
@@ -89,8 +89,8 @@ describe('Certification API:', function() {
       request(app)
         .put(`/api/certifications/${newCertification._id}`)
         .send({
-          name: 'Updated Certification',
-          info: 'This is the updated certification!!!'
+          title: 'Updated Certification',
+          description: 'This is the updated certification!!!'
         })
         .expect(200)
         .expect('Content-Type', /json/)
@@ -108,8 +108,8 @@ describe('Certification API:', function() {
     });
 
     it('should respond with the updated certification', function() {
-      updatedCertification.name.should.equal('Updated Certification');
-      updatedCertification.info.should.equal('This is the updated certification!!!');
+      updatedCertification.title.should.equal('Updated Certification');
+      updatedCertification.description.should.equal('This is the updated certification!!!');
     });
 
     it('should respond with the updated certification on a subsequent GET', function(done) {
@@ -123,8 +123,8 @@ describe('Certification API:', function() {
           }
           let certification = res.body;
 
-          certification.name.should.equal('Updated Certification');
-          certification.info.should.equal('This is the updated certification!!!');
+          certification.title.should.equal('Updated Certification');
+          certification.description.should.equal('This is the updated certification!!!');
 
           done();
         });
@@ -138,8 +138,8 @@ describe('Certification API:', function() {
       request(app)
         .patch(`/api/certifications/${newCertification._id}`)
         .send([
-          { op: 'replace', path: '/name', value: 'Patched Certification' },
-          { op: 'replace', path: '/info', value: 'This is the patched certification!!!' }
+          { op: 'replace', path: '/title', value: 'Patched Certification' },
+          { op: 'replace', path: '/description', value: 'This is the patched certification!!!' }
         ])
         .expect(200)
         .expect('Content-Type', /json/)
@@ -157,8 +157,8 @@ describe('Certification API:', function() {
     });
 
     it('should respond with the patched certification', function() {
-      patchedCertification.name.should.equal('Patched Certification');
-      patchedCertification.info.should.equal('This is the patched certification!!!');
+      patchedCertification.title.should.equal('Patched Certification');
+      patchedCertification.description.should.equal('This is the patched certification!!!');
     });
   });
 

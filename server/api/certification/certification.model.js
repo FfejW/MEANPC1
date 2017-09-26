@@ -4,9 +4,12 @@ import mongoose from 'mongoose';
 import {registerEvents} from './certification.events';
 
 var CertificationSchema = new mongoose.Schema({
-  name: String,
-  info: String,
-  active: Boolean
+  title: String,
+  link: String,
+  description: String,
+  requiredpdcs: String,
+  pdcTypes: [String],
+  author: String
 });
 
 registerEvents(CertificationSchema);

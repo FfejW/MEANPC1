@@ -37,20 +37,20 @@ export default function seedDatabaseIfNeeded() {
     Certification.find({}).remove()
       .then(() => {
         let certification = Certification.create({
-          name: 'Spanish Speaker',
-          info: 'Successfully completed Spanish I course.'
+          title: 'Spanish Speaker',
+          description: 'Successfully completed Spanish I course.'
         }, {
-          name: 'JavaScript Programmer',
-          info: 'Completed Javascript programming course'
+          title: 'JavaScript Programmer',
+          description: 'Completed Javascript programming course'
         }, {
-          name: 'Guitar Player',
-          info: 'Completed Guitar course'
+          title: 'Guitar Player',
+          description: 'Completed Guitar course'
         }, {
-          name: 'Mathematician',
-          info: 'Completed Calculus I'
+          title: 'Mathematician',
+          description: 'Completed Calculus I'
         }, {
-          name: 'Chef',
-          info: 'Completed cooking course'
+          title: 'Chef',
+          description: 'Completed cooking course'
         });
         return certification;
       })
