@@ -35,8 +35,8 @@ describe('Post API:', function() {
       request(app)
         .post('/api/posts')
         .send({
-          name: 'New Post',
-          info: 'This is the brand new post!!!'
+          title: 'New Post',
+          author: 'Test User'
         })
         .expect(201)
         .expect('Content-Type', /json/)
@@ -50,8 +50,8 @@ describe('Post API:', function() {
     });
 
     it('should respond with the newly created post', function() {
-      newPost.name.should.equal('New Post');
-      newPost.info.should.equal('This is the brand new post!!!');
+      newPost.title.should.equal('New Post');
+      newPost.author.should.equal('Test User');
     });
   });
 
@@ -77,8 +77,8 @@ describe('Post API:', function() {
     });
 
     it('should respond with the requested post', function() {
-      post.name.should.equal('New Post');
-      post.info.should.equal('This is the brand new post!!!');
+      post.title.should.equal('New Post');
+      post.author.should.equal('Test User');
     });
   });
 
@@ -89,8 +89,8 @@ describe('Post API:', function() {
       request(app)
         .put(`/api/posts/${newPost._id}`)
         .send({
-          name: 'Updated Post',
-          info: 'This is the updated post!!!'
+          title: 'Updated Post',
+          author: 'Test User'
         })
         .expect(200)
         .expect('Content-Type', /json/)
@@ -108,8 +108,8 @@ describe('Post API:', function() {
     });
 
     it('should respond with the updated post', function() {
-      updatedPost.name.should.equal('Updated Post');
-      updatedPost.info.should.equal('This is the updated post!!!');
+      updatedPost.title.should.equal('Updated Post');
+      updatedPost.author.should.equal('Test User');
     });
 
     it('should respond with the updated post on a subsequent GET', function(done) {
@@ -123,8 +123,8 @@ describe('Post API:', function() {
           }
           let post = res.body;
 
-          post.name.should.equal('Updated Post');
-          post.info.should.equal('This is the updated post!!!');
+          post.title.should.equal('Updated Post');
+          post.author.should.equal('Test User');
 
           done();
         });
@@ -138,8 +138,8 @@ describe('Post API:', function() {
       request(app)
         .patch(`/api/posts/${newPost._id}`)
         .send([
-          { op: 'replace', path: '/name', value: 'Patched Post' },
-          { op: 'replace', path: '/info', value: 'This is the patched post!!!' }
+          { op: 'replace', path: '/title', value: 'Patched Post' },
+          { op: 'replace', path: '/author', value: 'Test User' }
         ])
         .expect(200)
         .expect('Content-Type', /json/)
@@ -157,8 +157,8 @@ describe('Post API:', function() {
     });
 
     it('should respond with the patched post', function() {
-      patchedPost.name.should.equal('Patched Post');
-      patchedPost.info.should.equal('This is the patched post!!!');
+      patchedPost.title.should.equal('Patched Post');
+      patchedPost.author.should.equal('Test User');
     });
   });
 
