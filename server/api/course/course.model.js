@@ -4,9 +4,20 @@ import mongoose from 'mongoose';
 import {registerEvents} from './course.events';
 
 var CourseSchema = new mongoose.Schema({
-  name: String,
-  info: String,
-  active: Boolean
+  title: String,
+  link: String,
+  startdate: Date,
+  enddate: Date,
+  speaker: String,
+  programtype: String,
+  description: String,
+  pdcs: String,
+  certification: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Certification'
+  },
+  pdcType: String,
+  author: String
 });
 
 registerEvents(CourseSchema);

@@ -35,8 +35,8 @@ describe('Course API:', function() {
       request(app)
         .post('/api/courses')
         .send({
-          name: 'New Course',
-          info: 'This is the brand new course!!!'
+          title: 'New Course',
+          description: 'This is the brand new course!!!'
         })
         .expect(201)
         .expect('Content-Type', /json/)
@@ -50,8 +50,8 @@ describe('Course API:', function() {
     });
 
     it('should respond with the newly created course', function() {
-      newCourse.name.should.equal('New Course');
-      newCourse.info.should.equal('This is the brand new course!!!');
+      newCourse.title.should.equal('New Course');
+      newCourse.description.should.equal('This is the brand new course!!!');
     });
   });
 
@@ -77,8 +77,8 @@ describe('Course API:', function() {
     });
 
     it('should respond with the requested course', function() {
-      course.name.should.equal('New Course');
-      course.info.should.equal('This is the brand new course!!!');
+      course.title.should.equal('New Course');
+      course.description.should.equal('This is the brand new course!!!');
     });
   });
 
@@ -89,8 +89,8 @@ describe('Course API:', function() {
       request(app)
         .put(`/api/courses/${newCourse._id}`)
         .send({
-          name: 'Updated Course',
-          info: 'This is the updated course!!!'
+          title: 'Updated Course',
+          description: 'This is the updated course!!!'
         })
         .expect(200)
         .expect('Content-Type', /json/)
@@ -108,8 +108,8 @@ describe('Course API:', function() {
     });
 
     it('should respond with the updated course', function() {
-      updatedCourse.name.should.equal('Updated Course');
-      updatedCourse.info.should.equal('This is the updated course!!!');
+      updatedCourse.title.should.equal('Updated Course');
+      updatedCourse.description.should.equal('This is the updated course!!!');
     });
 
     it('should respond with the updated course on a subsequent GET', function(done) {
@@ -123,8 +123,8 @@ describe('Course API:', function() {
           }
           let course = res.body;
 
-          course.name.should.equal('Updated Course');
-          course.info.should.equal('This is the updated course!!!');
+          course.title.should.equal('Updated Course');
+          course.description.should.equal('This is the updated course!!!');
 
           done();
         });
@@ -138,8 +138,8 @@ describe('Course API:', function() {
       request(app)
         .patch(`/api/courses/${newCourse._id}`)
         .send([
-          { op: 'replace', path: '/name', value: 'Patched Course' },
-          { op: 'replace', path: '/info', value: 'This is the patched course!!!' }
+          { op: 'replace', path: '/title', value: 'Patched Course' },
+          { op: 'replace', path: '/description', value: 'This is the patched course!!!' }
         ])
         .expect(200)
         .expect('Content-Type', /json/)
@@ -157,8 +157,8 @@ describe('Course API:', function() {
     });
 
     it('should respond with the patched course', function() {
-      patchedCourse.name.should.equal('Patched Course');
-      patchedCourse.info.should.equal('This is the patched course!!!');
+      patchedCourse.title.should.equal('Patched Course');
+      patchedCourse.description.should.equal('This is the patched course!!!');
     });
   });
 

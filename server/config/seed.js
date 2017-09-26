@@ -14,20 +14,20 @@ export default function seedDatabaseIfNeeded() {
     Course.find({}).remove()
       .then(() => {
         let course = Course.create({
-          name: 'Spanish 1',
-          info: 'Learn to read and write Spanish.'
+          title: 'Spanish 1',
+          description: 'Learn to read and write Spanish.'
         }, {
-          name: 'JavaScript',
-          info: 'Introductory JavaScript programming'
+          title: 'JavaScript',
+          description: 'Introductory JavaScript programming'
         }, {
-          name: 'Guitar',
-          info: 'Revolutionary online Guitar course'
+          title: 'Guitar',
+          description: 'Revolutionary online Guitar course'
         }, {
-          name: 'Calculus I',
-          info: 'Intro to calculus'
+          title: 'Calculus I',
+          description: 'Intro to calculus'
         }, {
-          name: 'Cooking',
-          info: 'Learn how to cook'
+          title: 'Cooking',
+          description: 'Learn how to cook'
         });
         return course;
       })
