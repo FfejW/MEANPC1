@@ -32,10 +32,14 @@ var UserSchema = new Schema({
       } else {
         return false;
       }
-    }
+    },
+    select: false
   },
   provider: String,
-  salt: String,
+  salt: {
+    type: String,
+    select: false,
+  },
   facebook: {},
   twitter: {},
   google: {},
