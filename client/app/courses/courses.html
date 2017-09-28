@@ -11,7 +11,7 @@
     {{course.description}}
   </span>
   <span ng-show="course.author">
-    provided by {{course.author.name}}
+    provided by {{course.author.displayname}}
   </span>
   <span title="Edit Course" class="glyphicon glyphicon-pencil" ng-show="coursesCtrl.isEditable(course)" ng-click="coursesCtrl.getCourseForEdit(course);"></span>
   <span title="Delete Course" class="glyphicon glyphicon-remove" ng-show="coursesCtrl.isEditable(course)" ng-click="coursesCtrl.removeCourse(course)"></span>

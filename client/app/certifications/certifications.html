@@ -11,7 +11,7 @@
     {{certification.description}}
   </span>
   <span ng-show="certification.author">
-    provided by {{certification.author.name}}
+    provided by {{certification.author.displayname}}
   </span>
   <span title="Edit Certification" class="glyphicon glyphicon-pencil" ng-show="certificationsCtrl.isEditable(certification)" ng-click="certificationsCtrl.getCertificationForEdit(certification);"></span>
   <span title="Delete Certification" class="glyphicon glyphicon-remove" ng-show="certificationsCtrl.isEditable(certification)" ng-click="certificationsCtrl.removeCertification(certification)"></span>
