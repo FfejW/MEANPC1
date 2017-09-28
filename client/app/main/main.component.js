@@ -3,39 +3,30 @@ import uiRouter from 'angular-ui-router';
 import routing from './main.routes';
 
 export class MainController {
-  awesomeThings = [];
-  newThing = '';
+  features = [
+    {
+      title: 'Easy to Learn',
+      description: 'Our courses are easy to learn'
+    },
+    {
+      title: 'Priced for you',
+      description: 'Only pay if you become certified.'
+    },
+    {
+      title: 'Improve your career',
+      description: 'Earning a certification from certifi is a big step forward ' +
+      'in achieving your career goals.'
+    },
+  ];
 
   /*@ngInject*/
-  constructor($http, $scope, socket) {
+  constructor($http) {
     this.$http = $http;
-    this.socket = socket;
-
-    $scope.$on('$destroy', function() {
-      socket.unsyncUpdates('thing');
-    });
   }
 
   $onInit() {
-    this.$http.get('/api/things')
-      .then(response => {
-        this.awesomeThings = response.data;
-        this.socket.syncUpdates('thing', this.awesomeThings);
-      });
   }
 
-  addThing() {
-    if(this.newThing) {
-      this.$http.post('/api/things', {
-        name: this.newThing
-      });
-      this.newThing = '';
-    }
-  }
-
-  deleteThing(thing) {
-    this.$http.delete(`/api/things/${thing._id}`);
-  }
 }
 
 export default angular.module('meanpc1App.main', [uiRouter])
