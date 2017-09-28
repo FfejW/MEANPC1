@@ -11,31 +11,41 @@ export class ProfileComponent {
     this.$http = $http;
     this.auth = Auth;
 
-    this.user = Auth.getCurrentUserSync();
+    var user = Auth.getCurrentUserSync();
+    this.user = user;
+    this.originalUser = JSON.parse(JSON.stringify(user));
     this.isEditMode = false;
     this.courses = [];
     this.certifications = [];
   }
 
   $onInit() {
+    var that = this;
     this.$http.get('/api/users/me')
       .then(response => {
-        console.log(response.data);
+        that.user = response.data;
+        that.originalUser = JSON.parse(JSON.stringify(that.user));
       });
   }
 
   editUser() {
-    this.auth.update({
-      username: this.user.username,
-      displayname: this.user.displayname,
-      bio: this.user.bio
+    var that = this;
+    this.$http.put('/api/users/me', this.user, {
+      headers: { Authorization: 'Bearer ' + this.auth.getToken() }
+    }).then(response => {
+      that.user = response.data;
+      that.originalUser = JSON.parse(JSON.stringify(that.user));
     });
-
-    $scope.orignalUser = user;
+  }
+  cancelEdit() {
+    this.user = JSON.parse(JSON.stringify(this.originalUser));
+    this.isEditMode = false;
   }
   isLoggedIn() {
+    return this.auth.isLoggedInSync();
   }
   print(course) {
+    console.log('print this course');
   }
 }
 

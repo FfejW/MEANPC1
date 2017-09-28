@@ -12,6 +12,10 @@ var CourseSchema = new mongoose.Schema({
   programtype: String,
   description: String,
   pdcs: String,
+  credits: {
+    type: Number,
+    default: 1
+  },
   certification: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Certification'

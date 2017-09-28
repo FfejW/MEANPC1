@@ -14,8 +14,8 @@ export class MainController {
     },
     {
       title: 'Improve your career',
-      description: 'Earning a certification from certifi is a big step forward ' +
-      'in achieving your career goals.'
+      description: 'Earning a certification from certifi is a big step forward '
+      + 'in achieving your career goals.'
     },
   ];
 

@@ -77,5 +77,20 @@ describe('User API:', function() {
         });
     });
 
+    it('should update bio', function(done) {
+      request(app)
+        .put('/api/users/me')
+        .set('authorization', `Bearer ${token}`)
+        .send({
+          bio: 'this is my bio',
+          displayname: 'mynewname',
+        })
+        .expect(200)
+        .end((err, res) => {
+          console.log(res.body);
+          done();
+        });
+    });
+
   });
 });

@@ -76,6 +76,20 @@ export function destroy(req, res) {
 }
 
 /**
+ * Update a user's information
+ */
+export function updateInfo(req, res, next) {
+  req.user.bio = req.body.bio;
+  req.user.displayname = req.body.displayname;
+
+  req.user.save(function(err, user) {
+    if(err) return next(err);
+
+    res.json(user);
+  });
+}
+
+/**
  * Change a users password
  */
 export function changePassword(req, res) {
