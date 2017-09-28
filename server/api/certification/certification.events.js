@@ -4,6 +4,7 @@
 
 'use strict';
 
+import Certification from './certification.model';
 import {EventEmitter} from 'events';
 var CertificationEvents = new EventEmitter();
 
@@ -26,8 +27,10 @@ function registerEvents(Certification) {
 
 function emitEvent(event) {
   return function(doc) {
-    CertificationEvents.emit(event + ':' + doc._id, doc);
-    CertificationEvents.emit(event, doc);
+    Certification.populate(doc, {path: 'author'}, function(err, certification) {
+      CertificationEvents.emit(event + ':' + certification._id, certification);
+      CertificationEvents.emit(event, certification);
+    });
   };
 }
 

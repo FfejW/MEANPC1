@@ -9,7 +9,10 @@ var CertificationSchema = new mongoose.Schema({
   description: String,
   requiredpdcs: String,
   pdcTypes: [String],
-  author: String
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
 });
 
 registerEvents(CertificationSchema);
