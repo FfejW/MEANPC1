@@ -192,24 +192,24 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
     },
 
     /**
-     * Check if a user is an admin
+     * Check if a user is an Admin
      *   (synchronous|asynchronous)
      *
      * @param  {Function|*} callback - optional, function(is)
      * @return {Bool|Promise}
      */
     isAdmin(...args) {
-      return Auth.hasRole(Reflect.apply([].concat, ['admin'], args));
+      return Auth.hasRole(Reflect.apply([].concat, ['Admin'], args));
     },
 
     /**
-     * Check if a user is an admin
+     * Check if a user is an Admin
      *
      * @return {Bool}
      */
     isAdminSync() {
       // eslint-disable-next-line no-sync
-      return Auth.hasRoleSync('admin');
+      return Auth.hasRoleSync('Admin');
     },
 
     /**
