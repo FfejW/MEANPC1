@@ -4,6 +4,7 @@
 
 'use strict';
 
+import Course from './course.model';
 import {EventEmitter} from 'events';
 var CourseEvents = new EventEmitter();
 
@@ -26,8 +27,10 @@ function registerEvents(Course) {
 
 function emitEvent(event) {
   return function(doc) {
-    CourseEvents.emit(event + ':' + doc._id, doc);
-    CourseEvents.emit(event, doc);
+    Course.populate(doc, {path: 'author'}, function(err, course) {
+      CourseEvents.emit(event + ':' + course._id, course);
+      CourseEvents.emit(event, course);
+    });
   };
 }
 

@@ -57,6 +57,20 @@ function handleEntityNotFound(res) {
   };
 }
 
+function populatePath(res, pathName) {
+  return function(entity) {
+    return new Promise(function(resolve, reject) {
+      if(entity) {
+        Course.populate(entity, {path: pathName}, function(err, course) {
+          resolve(course);
+        });
+      } else {
+        resolve(entity);
+      }
+    });
+  };
+}
+
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
   return function(err) {
@@ -66,14 +80,14 @@ function handleError(res, statusCode) {
 
 // Gets a list of Courses
 export function index(req, res) {
-  return Course.find().exec()
+  return Course.find().populate('author').exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
 // Gets a single Course from the DB
 export function show(req, res) {
-  return Course.findById(req.params.id).exec()
+  return Course.findById(req.params.id).populate('author').exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -82,6 +96,7 @@ export function show(req, res) {
 // Creates a new Course in the DB
 export function create(req, res) {
   return Course.create(req.body)
+    .then(populatePath(res, 'author'))
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }

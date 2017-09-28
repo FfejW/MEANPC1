@@ -22,7 +22,7 @@ var UserSchema = new Schema({
   },
   role: {
     type: String,
-    default: 'user'
+    default: 'Professional'
   },
   password: {
     type: String,
@@ -43,7 +43,15 @@ var UserSchema = new Schema({
   facebook: {},
   twitter: {},
   google: {},
-  github: {}
+  github: {},
+  courses: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Course'
+  }],
+  certifications: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Certification'
+  }]
 });
 
 /**
@@ -256,6 +264,18 @@ UserSchema.methods = {
           return callback(null, key.toString('base64'));
         }
       });
+  },
+  addCourse(course, callback) {
+    this.courses.addToSet(course._id);
+    this.save(function(err, user) {
+      return callback(err, user);
+    });
+  },
+  addCertification(certification, callback) {
+    this.certifications.addToSet(certification._id);
+    this.save(function(err, user) {
+      return callback(err, user);
+    });
   }
 };
 

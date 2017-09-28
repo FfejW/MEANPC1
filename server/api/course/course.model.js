@@ -17,7 +17,10 @@ var CourseSchema = new mongoose.Schema({
     ref: 'Certification'
   },
   pdcType: String,
-  author: String
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
 });
 
 registerEvents(CourseSchema);

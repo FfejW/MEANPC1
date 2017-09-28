@@ -63,5 +63,19 @@ describe('User API:', function() {
         .expect(401)
         .end(done);
     });
+
+    it('should add a course', function(done) {
+      request(app)
+        .put('/api/users/' + user._id + '/courses')
+        .set('authorization', `Bearer ${token}`)
+        .send({
+          _id: '599b4ee666840b1b3f1ccbad',
+        })
+        .expect(204)
+        .end((err, res) => {
+          done();
+        });
+    });
+
   });
 });
