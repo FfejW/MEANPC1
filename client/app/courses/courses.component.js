@@ -11,6 +11,8 @@ export class CoursesComponent {
   courseIdEdit = '';
   courseTitleEdit = '';
   courseDescriptionEdit = '';
+  courseCredits = '';
+  courseCreditsEdit = '';
 
   /*@ngInject*/
   constructor($http, $scope, socket, Auth) {
@@ -38,10 +40,12 @@ export class CoursesComponent {
     this.$http.post('/api/courses', {
       title: this.courseTitle,
       description: this.courseDescription,
+      credits: this.courseCredits,
       author: this.auth.getCurrentUserSync()._id,
     }).then(response => {
       this.courseTitle = '';
       this.courseDescription = '';
+      this.courseCredits = '';
     });
   }
 
@@ -71,6 +75,7 @@ export class CoursesComponent {
     this.courseIdEdit = course._id;
     this.courseTitleEdit = course.title;
     this.courseDescriptionEdit = course.description;
+    this.courseCreditsEdit = course.credits;
     this.showEdit = true;
   }
 
@@ -105,6 +110,7 @@ export class CoursesComponent {
       updatedCourse.description = that.courseDescriptionEdit;
       that.courseTitleEdit = '';
       that.courseDescriptionEdit = '';
+      that.courseCreditsEdit = '';
     });
   }
 

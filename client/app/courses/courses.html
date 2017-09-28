@@ -37,6 +37,12 @@
            placeholder="Description"
            ng-model="coursesCtrl.courseDescription"></input>
     </div>
+    <div class="form-group">
+      <input type="text"
+           class="form-control"
+           placeholder="Credits"
+           ng-model="coursesCtrl.courseCredits"></input>
+    </div>
     <button type="submit" class="btn btn-primary" ng-click="coursesCtrl.showAdd = false;">Add Course</button>
     <button type="reset" class="btn btn-default" ng-click="coursesCtrl.showAdd = false;">Cancel</button>
   </form>
@@ -48,7 +54,7 @@
     <h3>Edit Course</h3>
     <div class="form-group">
       <input type="text"
-           disabled true
+           disabled
            class="form-control"
            placeholder="Title"
            ng-model="coursesCtrl.courseTitleEdit"></input>
@@ -58,6 +64,13 @@
            class="form-control"
            placeholder="Description"
            ng-model="coursesCtrl.courseDescriptionEdit"></input>
+    </div>
+    <div class="form-group">
+      <input type="text"
+           disabled
+           class="form-control"
+           placeholder="Credits"
+           ng-model="coursesCtrl.courseCreditsEdit"></input>
     </div>
     <button type="submit" class="btn btn-primary" ng-click="coursesCtrl.showEdit = false;">Edit Course</button>
     <button type="reset" class="btn btn-default" ng-click="coursesCtrl.showEdit = false;">Cancel</button>
