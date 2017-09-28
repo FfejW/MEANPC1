@@ -36,7 +36,7 @@ describe('Comment API:', function() {
         .post('/api/comments')
         .send({
           body: 'New Comment',
-          author: 'Test User'
+          author: '599e0e8d7f6d1e6c45769a63'
         })
         .expect(201)
         .expect('Content-Type', /json/)
@@ -51,7 +51,7 @@ describe('Comment API:', function() {
 
     it('should respond with the newly created comment', function() {
       newComment.body.should.equal('New Comment');
-      newComment.author.should.equal('Test User');
+      newComment.author.should.equal('599e0e8d7f6d1e6c45769a63');
     });
   });
 
@@ -78,7 +78,7 @@ describe('Comment API:', function() {
 
     it('should respond with the requested comment', function() {
       comment.body.should.equal('New Comment');
-      comment.author.should.equal('Test User');
+      comment.author.should.equal('599e0e8d7f6d1e6c45769a63');
     });
   });
 
@@ -90,7 +90,7 @@ describe('Comment API:', function() {
         .put(`/api/comments/${newComment._id}`)
         .send({
           body: 'Updated Comment',
-          author: 'Test User'
+          author: '599e0e8d7f6d1e6c45769a63'
         })
         .expect(200)
         .expect('Content-Type', /json/)
@@ -109,7 +109,7 @@ describe('Comment API:', function() {
 
     it('should respond with the updated comment', function() {
       updatedComment.body.should.equal('Updated Comment');
-      updatedComment.author.should.equal('Test User');
+      updatedComment.author.should.equal('599e0e8d7f6d1e6c45769a63');
     });
 
     it('should respond with the updated comment on a subsequent GET', function(done) {
@@ -124,7 +124,7 @@ describe('Comment API:', function() {
           let comment = res.body;
 
           comment.body.should.equal('Updated Comment');
-          comment.author.should.equal('Test User');
+          comment.author.should.equal('599e0e8d7f6d1e6c45769a63');
 
           done();
         });
@@ -139,7 +139,7 @@ describe('Comment API:', function() {
         .patch(`/api/comments/${newComment._id}`)
         .send([
           { op: 'replace', path: '/body', value: 'Patched Comment' },
-          { op: 'replace', path: '/author', value: 'Test User' }
+          { op: 'replace', path: '/author', value: '599e0e8d7f6d1e6c45769a63' }
         ])
         .expect(200)
         .expect('Content-Type', /json/)
@@ -158,7 +158,7 @@ describe('Comment API:', function() {
 
     it('should respond with the patched comment', function() {
       patchedComment.body.should.equal('Patched Comment');
-      patchedComment.author.should.equal('Test User');
+      patchedComment.author.should.equal('599e0e8d7f6d1e6c45769a63');
     });
   });
 

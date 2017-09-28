@@ -36,7 +36,7 @@ describe('Post API:', function() {
         .post('/api/posts')
         .send({
           title: 'New Post',
-          author: 'Test User'
+          author: '599e0e8d7f6d1e6c45769a63'
         })
         .expect(201)
         .expect('Content-Type', /json/)
@@ -51,7 +51,7 @@ describe('Post API:', function() {
 
     it('should respond with the newly created post', function() {
       newPost.title.should.equal('New Post');
-      newPost.author.should.equal('Test User');
+      newPost.author.should.equal('599e0e8d7f6d1e6c45769a63');
     });
   });
 
@@ -78,7 +78,7 @@ describe('Post API:', function() {
 
     it('should respond with the requested post', function() {
       post.title.should.equal('New Post');
-      post.author.should.equal('Test User');
+      post.author.should.equal('599e0e8d7f6d1e6c45769a63');
     });
   });
 
@@ -90,7 +90,7 @@ describe('Post API:', function() {
         .put(`/api/posts/${newPost._id}`)
         .send({
           title: 'Updated Post',
-          author: 'Test User'
+          author: '599e0e8d7f6d1e6c45769a63'
         })
         .expect(200)
         .expect('Content-Type', /json/)
@@ -109,7 +109,7 @@ describe('Post API:', function() {
 
     it('should respond with the updated post', function() {
       updatedPost.title.should.equal('Updated Post');
-      updatedPost.author.should.equal('Test User');
+      updatedPost.author.should.equal('599e0e8d7f6d1e6c45769a63');
     });
 
     it('should respond with the updated post on a subsequent GET', function(done) {
@@ -124,7 +124,7 @@ describe('Post API:', function() {
           let post = res.body;
 
           post.title.should.equal('Updated Post');
-          post.author.should.equal('Test User');
+          post.author.should.equal('599e0e8d7f6d1e6c45769a63');
 
           done();
         });
@@ -139,7 +139,7 @@ describe('Post API:', function() {
         .patch(`/api/posts/${newPost._id}`)
         .send([
           { op: 'replace', path: '/title', value: 'Patched Post' },
-          { op: 'replace', path: '/author', value: 'Test User' }
+          { op: 'replace', path: '/author', value: '599e0e8d7f6d1e6c45769a63' }
         ])
         .expect(200)
         .expect('Content-Type', /json/)
@@ -158,7 +158,7 @@ describe('Post API:', function() {
 
     it('should respond with the patched post', function() {
       patchedPost.title.should.equal('Patched Post');
-      patchedPost.author.should.equal('Test User');
+      patchedPost.author.should.equal('599e0e8d7f6d1e6c45769a63');
     });
   });
 
