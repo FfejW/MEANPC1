@@ -9,6 +9,7 @@ const authTypes = ['github', 'twitter', 'facebook', 'google'];
 
 var UserSchema = new Schema({
   name: String,
+  displayname: String,
   email: {
     type: String,
     lowercase: true,
@@ -43,7 +44,7 @@ var UserSchema = new Schema({
   facebook: {},
   twitter: {},
   google: {},
-  github: {},
+  bio: String,
   courses: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Course'
@@ -145,6 +146,10 @@ UserSchema
       } else {
         return next();
       }
+    }
+
+    if(!this.displayname) {
+      this.displayname = this.name;
     }
 
     // Make salt with a callback

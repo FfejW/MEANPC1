@@ -7,8 +7,35 @@ import routes from './profile.routes';
 
 export class ProfileComponent {
   /*@ngInject*/
-  constructor() {
-    this.message = 'Hello';
+  constructor($http, $scope, Auth) {
+    this.$http = $http;
+    this.auth = Auth;
+
+    this.user = Auth.getCurrentUserSync();
+    this.isEditMode = false;
+    this.courses = [];
+    this.certifications = [];
+  }
+
+  $onInit() {
+    this.$http.get('/api/users/me')
+      .then(response => {
+        console.log(response.data);
+      });
+  }
+
+  editUser() {
+    this.auth.update({
+      username: this.user.username,
+      displayname: this.user.displayname,
+      bio: this.user.bio
+    });
+
+    $scope.orignalUser = user;
+  }
+  isLoggedIn() {
+  }
+  print(course) {
   }
 }
 
