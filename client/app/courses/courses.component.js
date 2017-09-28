@@ -7,6 +7,8 @@ import routes from './courses.routes';
 
 export class CoursesComponent {
   courses = [];
+  certificaitons = [];
+  selectedCertification = {};
   newCourse = '';
   courseIdEdit = '';
   courseTitleEdit = '';
@@ -31,6 +33,10 @@ export class CoursesComponent {
         this.courses = response.data;
         this.socket.syncUpdates('course', this.courses);
       });
+    this.$http.get('/api/certifications')
+      .then(response => {
+        this.certifications = response.data;
+      });
   }
 
   addCourse() {
@@ -41,6 +47,7 @@ export class CoursesComponent {
       title: this.courseTitle,
       description: this.courseDescription,
       credits: this.courseCredits,
+      certification: this.selectedCertification,
       author: this.auth.getCurrentUserSync()._id,
     }).then(response => {
       this.courseTitle = '';

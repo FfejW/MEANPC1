@@ -39,37 +39,9 @@ export default function seedDatabaseIfNeeded() {
           //theProvider = users[1];
           theAdmin = users[2];
 
-          Course.find({}).remove()
-            .then(() => {
-              let course = Course.create({
-                title: 'Spanish 1',
-                description: 'Learn to read and write Spanish.',
-                author: theAdmin._id
-              }, {
-                title: 'JavaScript',
-                description: 'Introductory JavaScript programming',
-                author: theAdmin._id
-              }, {
-                title: 'Guitar',
-                description: 'Revolutionary online Guitar course',
-                author: theAdmin._id
-              }, {
-                title: 'Calculus I',
-                description: 'Intro to calculus',
-                author: theAdmin._id
-              }, {
-                title: 'Cooking',
-                description: 'Learn how to cook',
-                author: theAdmin._id
-              });
-              return course;
-            })
-            .then(() => console.log('finished populating courses'))
-            .catch(err => console.log('error populating courses', err));
-
           Certification.find({}).remove()
             .then(() => {
-              let certification = Certification.create({
+              Certification.create([{
                 title: 'Spanish Speaker',
                 description: 'Successfully completed Spanish I course.',
                 author: theAdmin._id
@@ -89,12 +61,43 @@ export default function seedDatabaseIfNeeded() {
                 title: 'Chef',
                 description: 'Completed cooking course',
                 author: theAdmin._id
-              });
-              return certification;
+              }])
+              .then(certifications => {
+                Course.find({}).remove()
+                  .then(() => {
+                    let course = Course.create({
+                      title: 'Spanish 1',
+                      description: 'Learn to read and write Spanish.',
+                      certification: certifications[0]._id,
+                      author: theAdmin._id
+                    }, {
+                      title: 'JavaScript',
+                      description: 'Introductory JavaScript programming',
+                      certification: certifications[1]._id,
+                      author: theAdmin._id
+                    }, {
+                      title: 'Guitar',
+                      description: 'Revolutionary online Guitar course',
+                      certification: certifications[2]._id,
+                      author: theAdmin._id
+                    }, {
+                      title: 'Calculus I',
+                      description: 'Intro to calculus',
+                      certification: certifications[3]._id,
+                      author: theAdmin._id
+                    }, {
+                      title: 'Cooking',
+                      description: 'Learn how to cook',
+                      certification: certifications[4]._id,
+                      author: theAdmin._id
+                    });
+                    return course;
+                  })
+                  .then(() => console.log('finished populating courses'))
+                  .catch(err => console.log('error populating courses', err));
             })
-            .then(() => console.log('finished populating certifications'))
+            })
             .catch(err => console.log('error populating certifications', err));
-
           console.log('finished populating users');
         })
         .catch(err => console.log('error populating users', err));

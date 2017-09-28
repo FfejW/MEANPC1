@@ -43,6 +43,12 @@
            placeholder="Credits"
            ng-model="coursesCtrl.courseCredits"></input>
     </div>
+    <div class="form-group">
+      <select ng-model="coursesCtrl.selectedCertification">
+        <option ng-repeat="certification in coursesCtrl.certifications"
+                ng-value="certification._id">{{certification.title}}</option>
+      </select>
+    </div>
     <button type="submit" class="btn btn-primary" ng-click="coursesCtrl.showAdd = false;">Add Course</button>
     <button type="reset" class="btn btn-default" ng-click="coursesCtrl.showAdd = false;">Cancel</button>
   </form>
