@@ -18,16 +18,17 @@ var events = {
 };
 
 // Register the event emitter to the model events
-function registerEvents(Course) {
+function registerEvents(course) {
   for(var e in events) {
     let event = events[e];
-    Course.post(e, emitEvent(event));
+    course.post(e, emitEvent(event));
   }
 }
 
 function emitEvent(event) {
   return function(doc) {
     Course.populate(doc, {path: 'author'}, function(err, course) {
+      if(err) return;
       CourseEvents.emit(event + ':' + course._id, course);
       CourseEvents.emit(event, course);
     });

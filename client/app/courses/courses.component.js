@@ -32,17 +32,16 @@ export class CoursesComponent {
   }
 
   addCourse() {
-    if (this.courseTitle === '') {
+    if(this.courseTitle === '') {
       return;
     }
     this.$http.post('/api/courses', {
       title: this.courseTitle,
       description: this.courseDescription,
       author: this.auth.getCurrentUserSync()._id,
-		}).then(response => {
+    }).then(response => {
       this.courseTitle = '';
       this.courseDescription = '';
-    }).catch(err => {
     });
   }
 
@@ -51,8 +50,7 @@ export class CoursesComponent {
   }
 
   addCourseToUser(course) {
-    if (this.auth.isLoggedInSync()) {
-      var token = this.auth.getToken();
+    if(this.auth.isLoggedInSync()) {
       return this.$http.put('/api/users/' + this.auth.getCurrentUserSync()._id + '/courses', course, {
         headers: { Authorization: 'Bearer ' + this.auth.getToken() }
       });
@@ -62,7 +60,7 @@ export class CoursesComponent {
   canEditCourses() {
     var token = this.auth.getToken();
 
-    if (token && this.auth.hasRoleSync('Professional')) {
+    if(token && this.auth.hasRoleSync('Professional')) {
       return true;
     } else {
       return false;
@@ -78,7 +76,7 @@ export class CoursesComponent {
 
   isEditable(course) {
     var token = this.auth.getToken();
-    return (token && this.auth.getCurrentUserSync()._id === course.author._id);
+    return token && this.auth.getCurrentUserSync()._id === course.author._id;
   }
 
   isLoggedIn() {
@@ -92,7 +90,7 @@ export class CoursesComponent {
   }
 
   editCourse() {
-    var me = this;
+    var that = this;
     this.$http.put('/api/courses/' + this.courseIdEdit, {
       description: this.courseDescriptionEdit
     }, {
@@ -100,13 +98,13 @@ export class CoursesComponent {
         Authorization: 'Bearer ' + this.auth.getToken()
       }
     }).then(function(data) {
-      var updatedCourse = me.courses.find(function(course) {
+      var updatedCourse = that.courses.find(function(course) {
         return course._id === data.data._id;
       });
 
-      updatedCourse.description = me.courseDescriptionEdit;
-      me.courseTitleEdit = '';
-      me.courseDescriptionEdit = '';
+      updatedCourse.description = that.courseDescriptionEdit;
+      that.courseTitleEdit = '';
+      that.courseDescriptionEdit = '';
     });
   }
 

@@ -10,8 +10,8 @@ import User from '../api/user/user.model';
 import config from './environment/';
 
 export default function seedDatabaseIfNeeded() {
-  var theProfessional;
-  var theProvider;
+  //var theProfessional;
+  //var theProvider;
   var theAdmin;
   if(config.seedDB) {
     User.find({}).remove()
@@ -34,9 +34,9 @@ export default function seedDatabaseIfNeeded() {
           email: 'admin@example.com',
           password: 'admin'
         }])
-        .then((users) => {
-          theProfessional = users[0];
-          theProvider = users[1];
+        .then(users => {
+          //theProfessional = users[0];
+          //theProvider = users[1];
           theAdmin = users[2];
 
           Course.find({}).remove()
@@ -95,11 +95,9 @@ export default function seedDatabaseIfNeeded() {
             .then(() => console.log('finished populating certifications'))
             .catch(err => console.log('error populating certifications', err));
 
-          console.log('finished populating users')
+          console.log('finished populating users');
         })
         .catch(err => console.log('error populating users', err));
       });
-
-
   }
 }

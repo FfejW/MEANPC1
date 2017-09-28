@@ -62,6 +62,8 @@ function populatePath(res, pathName) {
     return new Promise(function(resolve, reject) {
       if(entity) {
         Course.populate(entity, {path: pathName}, function(err, course) {
+          if(err) reject(null);
+
           resolve(course);
         });
       } else {
@@ -80,14 +82,18 @@ function handleError(res, statusCode) {
 
 // Gets a list of Courses
 export function index(req, res) {
-  return Course.find().populate('author').exec()
+  return Course.find()
+    .populate('author')
+    .exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
 // Gets a single Course from the DB
 export function show(req, res) {
-  return Course.findById(req.params.id).populate('author').exec()
+  return Course.findById(req.params.id)
+    .populate('author')
+    .exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));

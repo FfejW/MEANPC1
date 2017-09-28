@@ -32,17 +32,16 @@ export class CertificationsComponent {
   }
 
   addCertification() {
-    if (this.certificationTitle === '') {
+    if(this.certificationTitle === '') {
       return;
     }
     this.$http.post('/api/certifications', {
       title: this.certificationTitle,
       description: this.certificationDescription,
       author: this.auth.getCurrentUserSync()._id,
-		}).then(response => {
+    }).then(response => {
       this.certificationTitle = '';
       this.certificationDescription = '';
-    }).catch(err => {
     });
   }
 
@@ -51,8 +50,7 @@ export class CertificationsComponent {
   }
 
   addCertificationToUser(certification) {
-    if (this.auth.isLoggedInSync()) {
-      var token = this.auth.getToken();
+    if(this.auth.isLoggedInSync()) {
       return this.$http.put('/api/users/' + this.auth.getCurrentUserSync()._id + '/certifications', certification, {
         headers: { Authorization: 'Bearer ' + this.auth.getToken() }
       });
@@ -62,7 +60,7 @@ export class CertificationsComponent {
   canEditCertifications() {
     var token = this.auth.getToken();
 
-    if (token && this.auth.hasRoleSync('Professional')) {
+    if(token && this.auth.hasRoleSync('Professional')) {
       return true;
     } else {
       return false;
@@ -78,7 +76,7 @@ export class CertificationsComponent {
 
   isEditable(certification) {
     var token = this.auth.getToken();
-    return (token && this.auth.getCurrentUserSync()._id === certification.author._id);
+    return token && this.auth.getCurrentUserSync()._id === certification.author._id;
   }
 
   isLoggedIn() {
@@ -92,7 +90,7 @@ export class CertificationsComponent {
   }
 
   editCertification() {
-    var me = this;
+    var that = this;
     this.$http.put('/api/certifications/' + this.certificationIdEdit, {
       description: this.certificationDescriptionEdit
     }, {
@@ -100,13 +98,13 @@ export class CertificationsComponent {
         Authorization: 'Bearer ' + this.auth.getToken()
       }
     }).then(function(data) {
-      var updatedCertification = me.certifications.find(function(certification) {
+      var updatedCertification = that.certifications.find(function(certification) {
         return certification._id === data.data._id;
       });
 
-      updatedCertification.description = me.certificationDescriptionEdit;
-      me.certificationTitleEdit = '';
-      me.certificationDescriptionEdit = '';
+      updatedCertification.description = that.certificationDescriptionEdit;
+      that.certificationTitleEdit = '';
+      that.certificationDescriptionEdit = '';
     });
   }
 

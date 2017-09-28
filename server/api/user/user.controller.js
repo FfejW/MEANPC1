@@ -125,8 +125,8 @@ export function authCallback(req, res) {
  * Add a course to a user
  */
 export function addCourse(req, res, next) {
-	req.user.addCourse(req.body, function(err, user) {
-    if (err) return next(err);
+  req.user.addCourse(req.body, function(err, user) {
+    if(err) return next(err);
 
     return res.status(204).end();
   });
@@ -136,8 +136,8 @@ export function addCourse(req, res, next) {
  * Add a certification to a user
  */
 export function addCertification(req, res, next) {
-	req.user.addCertification(req.body, function(err, user) {
-    if (err) return next(err);
+  req.user.addCertification(req.body, function(err, user) {
+    if(err) return next(err);
 
     return res.status(204).end();
   });

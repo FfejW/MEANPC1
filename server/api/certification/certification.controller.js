@@ -62,13 +62,15 @@ function populatePath(res, pathName) {
     return new Promise(function(resolve, reject) {
       if(entity) {
         Certification.populate(entity, {path: pathName}, function(err, certification) {
+          if(err) reject(null);
+
           resolve(certification);
         });
       } else {
         resolve(entity);
       }
     });
-  }
+  };
 }
 
 function handleError(res, statusCode) {
@@ -80,14 +82,18 @@ function handleError(res, statusCode) {
 
 // Gets a list of Certifications
 export function index(req, res) {
-  return Certification.find().populate('author').exec()
+  return Certification.find()
+    .populate('author')
+    .exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
 // Gets a single Certification from the DB
 export function show(req, res) {
-  return Certification.findById(req.params.id).populate('author').exec()
+  return Certification.findById(req.params.id)
+    .populate('author')
+    .exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));

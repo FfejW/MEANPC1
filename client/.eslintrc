@@ -3,5 +3,11 @@
     "env": {
         "browser": true,
         "commonjs": true
+    },
+    "globals": {},
+    "plugins": [],
+    "rules": {
+        //Possible Errors
+        "no-sync": 0,                                               //disallow use of synchronous methods
     }
 }
