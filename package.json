@@ -149,6 +149,7 @@
     "npm": "^3.9.5"
   },
   "scripts": {
+	"build": "gulp",
     "test": "gulp test",
     "update-webdriver": "node node_modules/protractor/bin/webdriver-manager update",
     "start": "node server"
