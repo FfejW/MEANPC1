@@ -95,7 +95,7 @@ export default function seedDatabaseIfNeeded() {
                   })
                   .then(() => console.log('finished populating courses'))
                   .catch(err => console.log('error populating courses', err));
-            })
+              });
             })
             .catch(err => console.log('error populating certifications', err));
           console.log('finished populating users');
