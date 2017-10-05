@@ -97,7 +97,9 @@ export function changePassword(req, res) {
   var oldPass = String(req.body.oldPassword);
   var newPass = String(req.body.newPassword);
 
-  return User.findById(userId).exec()
+  return User.findById(userId)
+    .select('+salt +password')
+    .exec()
     .then(user => {
       if(user.authenticate(oldPass)) {
         user.password = newPass;
