@@ -20,10 +20,12 @@
     <Content Include="README.md" />
     <Compile Include="app.js" />
     <Compile Include="config\passport.js" />
-    <Compile Include="models\Comments.js" />
+    <Compile Include="controllers\auth.js" />
+    <Compile Include="controllers\certifications.js" />
+    <Compile Include="controllers\courses.js" />
+    <Compile Include="controllers\home.js" />
     <Compile Include="models\Certifications.js" />
     <Compile Include="models\Courses.js" />
-    <Compile Include="models\Posts.js" />
     <Compile Include="models\Users.js" />
     <Compile Include="routes\index.js" />
     <Content Include="views\error.ejs" />
@@ -31,6 +33,7 @@
     <Compile Include="public\javascripts\angularApp.js" />
     <Content Include="public\stylesheets\style.css" />
     <Content Include="views\partials\certifications.ejs" />
+    <Content Include="views\partials\home - original.ejs" />
     <Content Include="views\partials\home.ejs" />
     <Content Include="views\partials\profile.ejs" />
     <Content Include="views\partials\register.ejs" />
@@ -41,6 +44,7 @@
     <Folder Include="bin" />
     <Folder Include="config" />
     <Folder Include="models" />
+    <Folder Include="controllers\" />
     <Folder Include="public" />
     <Folder Include="public\javascripts" />
     <Folder Include="public\stylesheets" />
