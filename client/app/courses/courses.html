@@ -1,0 +1,89 @@
+<div class="container">
+  <div class="page-header">
+    <h1>Courses</h1>
+  </div>
+  <div ng-repeat="course in coursesCtrl.courses">
+    <span style="font-size:20px; margin-left:10px;">
+      <a href="/courses/{{course._id}}">
+        {{course.title}}
+      </a>
+    </span>
+    <span>
+      {{course.description}}
+    </span>
+    <span ng-show="course.author">
+      provided by {{course.author.displayname}}
+    </span>
+    <span title="Edit Course" class="glyphicon glyphicon-pencil" ng-show="coursesCtrl.isEditable(course)" ng-click="coursesCtrl.getCourseForEdit(course);"></span>
+    <span title="Delete Course" class="glyphicon glyphicon-remove" ng-show="coursesCtrl.isEditable(course)" ng-click="coursesCtrl.removeCourse(course)"></span>
+    <span title="I completed this!" ng-show="coursesCtrl.isLoggedIn()" class="glyphicon glyphicon-ok" ng-click="coursesCtrl.addCourseToUser(course)"></span>
+  </div>
+  <div>
+    <button type="button" class="btn btn-primary" ng-show="coursesCtrl.canEditCourses() && !coursesCtrl.showAdd" ng-click="coursesCtrl.showAdd = true;">New Course</button>
+  </div>
+
+  <div ng-show="coursesCtrl.canEditCourses() && coursesCtrl.showAdd">
+    <form ng-submit="coursesCtrl.addCourse()"
+        style="margin-top:30px;" ng-show="coursesCtrl.isLoggedIn()">
+      <h3>Add a New Course</h3>
+      <div class="form-group">
+        <input type="text"
+             class="form-control"
+             placeholder="Title"
+             ng-model="coursesCtrl.courseTitle"></input>
+      </div>
+      <div class="form-group">
+        <input type="text"
+             class="form-control"
+             placeholder="Description"
+             ng-model="coursesCtrl.courseDescription"></input>
+      </div>
+      <div class="form-group">
+        <input type="text"
+             class="form-control"
+             placeholder="Credits"
+             ng-model="coursesCtrl.courseCredits"></input>
+      </div>
+      <div class="form-group">
+        <select ng-model="coursesCtrl.selectedCertification">
+          <option ng-repeat="certification in coursesCtrl.certifications"
+                  ng-value="certification._id">{{certification.title}}</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary" ng-click="coursesCtrl.showAdd = false;">Add Course</button>
+      <button type="reset" class="btn btn-default" ng-click="coursesCtrl.showAdd = false;">Cancel</button>
+    </form>
+  </div>
+
+  <div ng-show="coursesCtrl.canEditCourses() && coursesCtrl.showEdit">
+    <form ng-submit="coursesCtrl.editCourse()"
+        style="margin-top:30px;" ng-show="coursesCtrl.isLoggedIn()">
+      <h3>Edit Course</h3>
+      <div class="form-group">
+        <input type="text"
+             disabled
+             class="form-control"
+             placeholder="Title"
+             ng-model="coursesCtrl.courseTitleEdit"></input>
+      </div>
+      <div class="form-group">
+        <input type="text"
+             class="form-control"
+             placeholder="Description"
+             ng-model="coursesCtrl.courseDescriptionEdit"></input>
+      </div>
+      <div class="form-group">
+        <input type="text"
+             disabled
+             class="form-control"
+             placeholder="Credits"
+             ng-model="coursesCtrl.courseCreditsEdit"></input>
+      </div>
+      <button type="submit" class="btn btn-primary" ng-click="coursesCtrl.showEdit = false;">Edit Course</button>
+      <button type="reset" class="btn btn-default" ng-click="coursesCtrl.showEdit = false;">Cancel</button>
+    </form>
+  </div>
+  <div ng-hide="coursesCtrl.isLoggedIn()">
+    <h3>You need to <a href="/login">Log In</a> or <a href="/signup">Register</a> before you can add a course.</h3>
+  </div>
+</div>

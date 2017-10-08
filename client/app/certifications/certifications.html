@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="page-header">
+    <h1>Certifications</h1>
+  </div>
+  <div ng-repeat="certification in certificationsCtrl.certifications">
+    <span style="font-size:20px; margin-left:10px;">
+      <a href="/certifications/{{certification._id}}">
+        {{certification.title}}
+      </a>
+    </span>
+    <span>
+      {{certification.description}}
+    </span>
+    <span ng-show="certification.author">
+      provided by {{certification.author.displayname}}
+    </span>
+    <span title="Edit Certification" class="glyphicon glyphicon-pencil" ng-show="certificationsCtrl.isEditable(certification)" ng-click="certificationsCtrl.getCertificationForEdit(certification);"></span>
+    <span title="Delete Certification" class="glyphicon glyphicon-remove" ng-show="certificationsCtrl.isEditable(certification)" ng-click="certificationsCtrl.removeCertification(certification)"></span>
+    <span title="I completed this!" ng-show="certificationsCtrl.isLoggedIn()" class="glyphicon glyphicon-ok" ng-click="certificationsCtrl.addCertificationToUser(certification)"></span>
+  </div>
+  <div>
+    <button type="button" class="btn btn-primary" ng-show="certificationsCtrl.canEditCertifications() && !certificationsCtrl.showAdd" ng-click="certificationsCtrl.showAdd = true;">New Certification</button>
+  </div>
+
+  <div ng-show="certificationsCtrl.canEditCertifications() && certificationsCtrl.showAdd">
+    <form ng-submit="certificationsCtrl.addCertification()"
+        style="margin-top:30px;" ng-show="certificationsCtrl.isLoggedIn()">
+      <h3>Add a New Certification</h3>
+      <div class="form-group">
+        <input type="text"
+             class="form-control"
+             placeholder="Title"
+             ng-model="certificationsCtrl.certificationTitle"></input>
+      </div>
+      <div class="form-group">
+        <input type="text"
+             class="form-control"
+             placeholder="Description"
+             ng-model="certificationsCtrl.certificationDescription"></input>
+      </div>
+      <button type="submit" class="btn btn-primary" ng-click="certificationsCtrl.showAdd = false;">Add Certification</button>
+      <button type="reset" class="btn btn-default" ng-click="certificationsCtrl.showAdd = false;">Cancel</button>
+    </form>
+  </div>
+
+  <div ng-show="certificationsCtrl.canEditCertifications() && certificationsCtrl.showEdit">
+    <form ng-submit="certificationsCtrl.editCertification()"
+        style="margin-top:30px;" ng-show="certificationsCtrl.isLoggedIn()">
+      <h3>Edit Certification</h3>
+      <div class="form-group">
+        <input type="text"
+             disabled true
+             class="form-control"
+             placeholder="Title"
+             ng-model="certificationsCtrl.certificationTitleEdit"></input>
+      </div>
+      <div class="form-group">
+        <input type="text"
+             class="form-control"
+             placeholder="Description"
+             ng-model="certificationsCtrl.certificationDescriptionEdit"></input>
+      </div>
+      <button type="submit" class="btn btn-primary" ng-click="certificationsCtrl.showEdit = false;">Edit Certification</button>
+      <button type="reset" class="btn btn-default" ng-click="certificationsCtrl.showEdit = false;">Cancel</button>
+    </form>
+  </div>
+  <div ng-hide="certificationsCtrl.isLoggedIn()">
+    <h3>You need to <a href="/login">Log In</a> or <a href="/signup">Register</a> before you can add a certification.</h3>
+  </div>
+</div>
